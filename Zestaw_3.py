@@ -126,6 +126,37 @@ def ex5():
     
     insertionSort(l_list)
     print(l_list[9])
+    
+   
+def ex6():
+#Zadanie 6. Napisac program wypełniajacy N-elementowa tablice t liczbami naturalnymi 1-1000 i sprawdzajacy
+#czy kazdy element tablicy zawiera co najmniej jedna cyfre nieparzysta.
+    from random import randint
+
+    #Robię to trochę nie szablonowo. Nie wypisuję całej tablicy tylko dynamicznie za każdym razem sprawdzam czy
+    #bieżący element spełnia założenia - jeśli nie to wychodzę z programu i zwracam false gdyż program ma podawać 
+    #czy każdy element zawiera co najmniej jedną cyfrę nieparzystą, więc jak znajdę jeden, który nie ma to zbędne jest szukanie dalej
+    
+    N = 10
+    t = [0] * N
+
+    for i in range(N):
+
+        bOdd = False
+        t[i] = randint(1,1000)
+        num = t[i]
+        print(t)
+        while num != 0:
+            temp = num % 10
+            if temp % 2 == 1:
+                bOdd = True
+                break
+            num //= 10
+        if bOdd == False:
+            return False
+        i += 1
+
+    return True
 
 if __name__ == "__main__":
     ex5()
