@@ -360,5 +360,67 @@ def ex11():
 
     print(max)
 
+def ex12():
+#Zadanie 12. Prosze napisac program, który wypełnia N-elementowa tablice t pseudolosowymi liczbami
+#nieparzystymi z zakresu [1..99], a nastepnie wyznacza i wypisuje róznice pomiedzy długoscia najdłuzszego
+#znajdujacego sie w niej ciagu arytmetycznego o dodatniej róznicy, a długoscia najdłuzszego ciagu arytmetycznego
+#o ujemnej róznicy, przy załozeniu, ze kolejnymi wyrazami ciagu sa elementy tablicy o kolejnych
+#indeksach.
+    from random import randint
+
+    N = 100 #int(input("N: "))
+    t = [0]*N
+    
+    for i in range(len(t)):
+        while t[i] % 2 == 0:
+            t[i] = randint(1,99)
+    
+#niedokończone bo się nie chciało
+
+def ex13():
+#Zadanie 13. Prosze napisac program, który wypełnia N-elementowa tablice t trzycyfrowymi liczbami
+#pseudolosowymi, a nastepnie wyznacza i wypisuje długosc najdłuzszego podciagu spójnego znajdujacego
+#sie w tablicy dla którego w tablicy wystepuje równiez rewers tego ciagu. Na przykład dla tablicy: t=
+#[2,9,3,1,7,11,9,6,7,7,1,3,9,12,15] odpowiedzia jest liczba 4.
+    from random import randint
+
+    N = int(input("N: "))
+    t = [0]*N
+    N = len(t) 
+    m_cnt = 1
+    
+    for i in range(len(t)):
+        t[i] = randint(100,999)
+    
+    for i in range(1,N):
+        j = i
+        k = 1
+        cnt = 1
+        while j < N:
+            if t[i-1] == t[j] and t[i] == t[j-1]:
+                cnt += 1
+                while t[i+k] == t[j-1-k]:
+                    cnt +=1
+                    k += 1
+            j += 1
+
+        if cnt > m_cnt:
+           m_cnt = cnt
+
+    print(t)
+    print(m_cnt)
+        
+            
+
+
+
+#def ex14():
+#Zadanie 14. Napisac program wyznaczajacy na drodze eksperymentu prawdopodobienstwo tego, ze w
+#grupie N przypadkowo spotkanych osób, co najmniej dwie urodziły sie tego samego dnia roku. Wyznaczyc
+#wartosci prawdopodobienstwa dla N z zakresu 20-40.
+
+
+
 if __name__ == "__main__":
-    ex4()
+    #string_compare("wdfwdwd","wdfrwerw")
+    ex13()
