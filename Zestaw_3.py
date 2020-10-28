@@ -1,3 +1,28 @@
+def split(word): 
+    return [char for char in word]
+
+def string_compare(string1,string2):
+    
+    cnt = 0
+    l1 = split(string1)
+    l2 = split(string2)
+
+    print(l1,l2)
+
+    if len(l1) > len(l2):
+        length = len(l1)
+    else:
+        length = len(l2)
+
+    for i in range(length):
+        if l1[i] != l2[i]:
+            break
+        print(">>", cnt)
+        cnt += 1
+
+    print("Są podobne do :", cnt, "miejsca")
+
+
 def ex1():
 #Zadanie 1. Napisac funkcje zamieniajaca i wypisujaca liczbe naturalna na system o podstawie 2-16.
     n = int(input("n: "))
@@ -43,7 +68,7 @@ def ex2():
 
 def ex3():
 #Zadanie 3. Napisac program generujacy i wypisujacy liczby pierwsze mniejsze od N metoda Sita Eratostenesa.
-    N = 1000
+    N = int(input("podaj N: "))
     l_N = []
     x = 0
 
@@ -89,8 +114,6 @@ def ex4():
 
         for k in range(len(l_l)):
             suma += l_l[k] * 10**(N-k)'''
-
-    print("2.", suma // 10, sep ='')
     from time import time
     start = time()
 
@@ -229,25 +252,113 @@ def ex7():
 
     return False
 
+#################################################
+
+def czy_pierwsza(n):
+    if(n==1):
+        return False
+    if(n==2 or n==3):
+        return True
+    k = 2
+    while(k*k<=n):
+        if(n%k==0):
+            return False
+        k+=1
+    return True
+
 def ex8():
 #Zadanie 8. Dana jest N-elementowa tablica t zawierajaca liczby naturalne. W tablicy mozemy przeskoczyc
 #z pola o indeksie k o n pól w prawo jezeli wartosc n jest czynnikiem pierwszym liczby t[k]. Napisac funkcje
 #sprawdzajaca czy jest mozliwe przejscie z pierwszego pola tablicy na ostatnie pole.
 
-#powinno być podane że czy
+    ta = [20, 150, 2, 200, 300, 195, 14, 15, 3, 3, 18, 21, 300, 3, 6, 3, 5, 12, 1]
+    z = len(ta)
+
+
+    tb = [False]*z #tablica przechowuje informacje czy mozna na to pole wskoczyć z pierwszego pola
+    tb[0] = True
+
+    for i in range(z):
+        if(tb[i]==True):
+            k=2
+            num = ta[i] #przypisuje liczbe z pola o indeksie i
+            while(k<=num and k<z-i):
+                if(num%k==0):
+                    if(czy_pierwsza(k)):
+                        tb[i+k]=True
+                k=k+1
+
+    print(tb[z-1])
+
+def ex9():
+#Zadanie 9. Napisac funkcje, która dla N-elementowej tablicy t wypełnionej liczbami naturalnym wyznacza
+#długosc najdłuzszego, spójnego podciagu rosnacego.   
     from random import randint
-    N = 5
-    t = [0] * N
+    N = int(input("N: "))
+    t = [ randint(1,100) for i in range(N)]
+    max = 0
+    temp = 1
 
-    for i in range(N):
-        t[i] = randint(2,10)
-        i += 1
+    for i in range(1,len(t)):
+        if t[i-1] < t[i]:
+            temp += 1
+        else:
+            if temp > max:
+                max = temp
+            temp = 1
     print(t)
-    #step = 0
+    print(max)
+
+def ex10():
+#Zadanie 10. Napisac funkcje, która dla N-elementowej tablicy t wypełnionej liczbami naturalnym wyznacza
+#długosc najdłuzszego, spójnego podciagu arytmetycznego.
+    from random import randint
+
+    N = 100 #int(input("N: "))
+    t = [2,4,6,10,1,3,5]#[ randint(1,100) for i in range(N)]
+    diff = 0
+    temp = 1
+    max = 0
+
+    print(t)
+
+    for i in range(1,len(t)):
+        diff = t[i] - t[i-1]
+        j = i
+        while j < len(t) and t[j-1] + diff == t[j]:
+            temp += 1
+            j += 1
+        if temp > max:
+            max = temp
+        temp = 1
+
+    print(max)
 
 
+def ex11():
+#Zadanie 11. Napisac funkcje, która dla N-elementowej tablicy t wypełnionej liczbami naturalnym wyznacza
+#długosc najdłuzszego, spójnego podciagu geometrycznego.
+    from random import randint
 
+    N = 100 #int(input("N: "))
+    t = [5,1,8,10,3,9,5]#[ randint(1,100) for i in range(N)]
+    q = 1
+    temp = 1
+    max = 0
 
+    print(t)
+
+    for i in range(1,len(t)):
+        q = t[i] / t[i-1]
+        j = i
+        while j < len(t) and t[j-1] * q == t[j]:
+            temp += 1
+            j += 1
+        if temp > max:
+            max = temp
+        temp = 1
+
+    print(max)
 
 if __name__ == "__main__":
     ex4()
