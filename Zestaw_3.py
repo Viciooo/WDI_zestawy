@@ -340,18 +340,16 @@ def ex11():
 #długosc najdłuzszego, spójnego podciagu geometrycznego.
     from random import randint
 
-    N = 100 #int(input("N: "))
-    t = [5,1,8,10,3,9,5]#[ randint(1,100) for i in range(N)]
+    N = int(input("N: "))
+    t = [ randint(1,100) for i in range(N)]
     q = 1
     temp = 1
     max = 0
 
-    print(t)
-
     for i in range(1,len(t)):
-        q = t[i] / t[i-1]
+        q = t[i-1] / t[i]
         j = i
-        while j < len(t) and t[j-1] * q == t[j]:
+        while j < len(t) and t[j-1] == t[j] * q:
             temp += 1
             j += 1
         if temp > max:
@@ -368,14 +366,41 @@ def ex12():
 #indeksach.
     from random import randint
 
-    N = 100 #int(input("N: "))
+    N = int(input("N: "))
     t = [0]*N
+    max_m = 0
+    max_p = 0
+    cnt_p = 0
+    cnt_m = 0
     
-    for i in range(len(t)):
+    for i in range(N):
         while t[i] % 2 == 0:
             t[i] = randint(1,99)
     
-#niedokończone bo się nie chciało
+    print(t)
+
+    for i in range(1,N):
+        if t[i-1] > t[i]: #malejący
+            r_m = t[i-1] - t[i]
+            cnt_m = 1
+            j = i
+            while j+1 < N and t[j] - r_m == t[j+1]:
+                cnt_m += 1
+                j += 1
+
+        if t[i-1] < t[i]: #rosnący
+            r_p = t[i] - t[i-1]
+            cnt_p = 1
+            j = i
+            while j+1 < N and t[j] + r_p == t[j+1]:
+                cnt_p += 1
+                j += 1
+        if cnt_m > max_m:
+            max_m = cnt_m
+        if cnt_p > max_p:
+            max_p = cnt_p
+        
+    print("wynik",abs(max_m-max_p))
 
 def ex13():
 #Zadanie 13. Prosze napisac program, który wypełnia N-elementowa tablice t trzycyfrowymi liczbami
@@ -386,7 +411,6 @@ def ex13():
 
     N = int(input("N: "))
     t = [0]*N
-    N = len(t) 
     m_cnt = 1
     
     for i in range(len(t)):
@@ -414,13 +438,27 @@ def ex13():
 
 
 
-#def ex14():
+def ex14():
 #Zadanie 14. Napisac program wyznaczajacy na drodze eksperymentu prawdopodobienstwo tego, ze w
 #grupie N przypadkowo spotkanych osób, co najmniej dwie urodziły sie tego samego dnia roku. Wyznaczyc
 #wartosci prawdopodobienstwa dla N z zakresu 20-40.
-
-
+    from random import randint
+    N = 23
+    t = [0]* N
+    cnt = 0
+    for i in range(100): # 100 razy sprawdzamy tą sytuację i wynik podamy wtedy w procentach
+        for x in range(N): # generowanie losowej tablicy
+            t[x] = randint(1,365)
+        for j in range(N-1): #sprawdzanie dla każdego elementu tablicy czy gdziesz w tablicy jest element mu równy
+            k = j + 1
+            while k + 1 < N and t[j] != t[k]:
+                k += 1
+            if t[j] == t[k]:
+                cnt += 1
+                break
+    
+    print("Szanse na to wynoszą", cnt, "%")
 
 if __name__ == "__main__":
     #string_compare("wdfwdwd","wdfrwerw")
-    ex13()
+    ex14()
