@@ -266,29 +266,44 @@ def czy_pierwsza(n):
         k+=1
     return True
 
+#################################### do ex8
+
+def div_check(n):
+    l = []
+    for i in range(2,n+1):
+        if n % i == 0:
+            l.append(i)
+            while n % i == 0:
+                n //= i
+    return l
+
 def ex8():
 #Zadanie 8. Dana jest N-elementowa tablica t zawierajaca liczby naturalne. W tablicy mozemy przeskoczyc
 #z pola o indeksie k o n pól w prawo jezeli wartosc n jest czynnikiem pierwszym liczby t[k]. Napisac funkcje
 #sprawdzajaca czy jest mozliwe przejscie z pierwszego pola tablicy na ostatnie pole.
 
-    ta = [20, 150, 2, 200, 300, 195, 14, 15, 3, 3, 18, 21, 300, 3, 6, 3, 5, 12, 1]
-    z = len(ta)
+def ex8():
+    l_num = [2,3,6,4,1,1]
+    l_zer = len(l_num)* [0]
+    l_zer[0] = 1
+    i = 0
 
-
-    tb = [False]*z #tablica przechowuje informacje czy mozna na to pole wskoczyć z pierwszego pola
-    tb[0] = True
-
-    for i in range(z):
-        if(tb[i]==True):
-            k=2
-            num = ta[i] #przypisuje liczbe z pola o indeksie i
-            while(k<=num and k<z-i):
-                if(num%k==0):
-                    if(czy_pierwsza(k)):
-                        tb[i+k]=True
-                k=k+1
-
-    print(tb[z-1])
+    while i < len(l_num):
+        l_div = div_check(l_num[i])
+        j = i
+        if l_zer[i] == 1:
+            while j < len(l_zer):
+                if l_zer[j] == 1:
+                    for k in l_div:
+                        if j+k < len(l_zer):
+                            l_zer[j+k] = 1
+                j += 1
+        i += 1
+    print(l_zer)
+    if l_zer[-1] == 1:
+        return True
+    else:
+        return False
 
 def ex9():
 #Zadanie 9. Napisac funkcje, która dla N-elementowej tablicy t wypełnionej liczbami naturalnym wyznacza
