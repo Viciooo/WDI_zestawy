@@ -68,7 +68,7 @@ def ex2():
 
 def ex3():
 #Zadanie 3. Napisac program generujacy i wypisujacy liczby pierwsze mniejsze od N metoda Sita Eratostenesa.
-    N = int(input("podaj N: "))
+    '''N = int(input("podaj N: "))
     l_N = []
     x = 0
 
@@ -83,7 +83,7 @@ def ex3():
             y += 1
         x += 1
     
-    print(l_N)
+    print(l_N)'''
 
 def ex4():
 #Zadanie 4. Napisac program obliczajacy i wypisujacy stała e z rozwiniecia w szereg e = 1/0! + 1/1! +
@@ -252,24 +252,10 @@ def ex7():
 
     return False
 
-#################################################
+################################################# do ex8 poniżej
 
-def czy_pierwsza(n):
-    if(n==1):
-        return False
-    if(n==2 or n==3):
-        return True
-    k = 2
-    while(k*k<=n):
-        if(n%k==0):
-            return False
-        k+=1
-    return True
-
-#################################### do ex8
-
-def div_check(n):
-    l = []
+    def div_check(n):
+        l = []
     for i in range(2,n+1):
         if n % i == 0:
             l.append(i)
@@ -281,8 +267,6 @@ def ex8():
 #Zadanie 8. Dana jest N-elementowa tablica t zawierajaca liczby naturalne. W tablicy mozemy przeskoczyc
 #z pola o indeksie k o n pól w prawo jezeli wartosc n jest czynnikiem pierwszym liczby t[k]. Napisac funkcje
 #sprawdzajaca czy jest mozliwe przejscie z pierwszego pola tablicy na ostatnie pole.
-
-def ex8():
     l_num = [2,3,6,4,1,1]
     l_zer = len(l_num)* [0]
     l_zer[0] = 1
@@ -474,6 +458,56 @@ def ex14():
     
     print("Szanse na to wynoszą", cnt, "%")
 
+
+def gen_rnd_tab(length,start,end):
+    from random import randint
+    tab = []
+    for i in range(length):
+        tab.append(randint(start,end))
+    return tab
+
+def czy_pierwsza(n):
+    k = 2
+
+    if(n==1):
+        return False
+
+    while k <= n**0.5:
+
+        if n % k == 0:
+
+            if n // k == 1:
+                return True
+            else:
+                return False
+        k += 1
+
+    return True
+
+def ex15():
+#Zadanie 15. Dana jest duza tablica t. Prosze napisac funkcje, która zwraca informacje czy w tablicy
+#zachodzi nastepujacy warunek: „wszystkie elementy, których indeks jest elementem ciagu Fibonacciego sa
+#liczbami złozonymi, a wsród pozostałych przynajmniej jedna jest liczba pierwsza”
+    N = 100
+    t = gen_rnd_tab(N,1,100)
+    a1 = 1
+    a2 = 1
+    cnt = 0
+    
+    for i in range(N):
+        if i == a2:
+            a1, a2 = a2, a1+a2
+            if czy_pierwsza(t[i]) == True:
+                return False
+        else:
+            if czy_pierwsza(t[i]) == True:
+                cnt += 1  
+    if cnt > 0:
+        return True
+    
+    return False
+
+
+
 if __name__ == "__main__":
-    #string_compare("wdfwdwd","wdfrwerw")
-    ex14()
+    print(ex15())
