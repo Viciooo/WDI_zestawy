@@ -507,7 +507,128 @@ def ex15():
     
     return False
 
+def ex16():
+#Zadanie 16. Mamy zdefiniowana n-elementowa tablice liczb całkowitych. Prosze napisac funkcje zwracajaca
+#wartosc typu bool oznaczajaca, czy w tablicy istnieje dokładnie jeden element najmniejszy i dokładnie
+#jeden element najwiekszy (liczba elementów najmniejszych oznacza liczbe takich elementów o tej samej
+#wartosci).
+
+    N = 100
+    i = 0
+
+    t = gen_rnd_tab(N,1,100)
+
+    insertionSort(t)
+    print(t)
+
+    if t[0] == t[1]:
+        return False
+    if t[-1] == t[-2]:
+        return False
+    
+    return True
+
+def ex17():
+#Zadanie 17. Dane sa dwie N-elementowe tablice t1 i t2 zawierajace liczby naturalne. Z wartosci w obu
+#tablicach mozemy tworzyc sumy. „Poprawna” suma to taka, która zawiera co najmniej jeden element (z
+#tablicy t1 lub t2) o kazdym indeksie. Na przykład dla tablic: t1 = [1,3,2,4] i t2 = [9,7,4,8] poprawnymi
+#sumami sa na przykład 1+3+2+4, 9+7+4+8, 1+7+3+8, 1+9+7+2+4+8. Prosze napisac funkcje generujaca
+#i wypisujaca wszystkie poprawne sumy, które sa liczbami pierwszymi. Do funkcji nalezy przekazac dwie
+#tablice, funkcja powinna zwrócic liczbe znalezionych i wypisanych sum.    
+    t1 = gen_rnd_tab(10,1,100)
+    t2 = gen_rnd_tab(10,1,100) 
+
+    #wtf garek
+
+
+
+def ex18(tab):
+#Zadanie 18. Dana jest N-elementowa tablica t jest wypełniona liczbami naturalnymi. Prosze napisac
+#funkcje, która zwraca długosc najdłuzszego spójnego podciagu bedacego palindromem złozonym wyłacznie
+#z liczb nieparzystych. Do funkcji nalezy przekazac tablice, funkcja powinna zwrócic długosc znalezionego
+#podciagu lub wartosc 0 jezeli taki podciag nie istnieje.    
+    length = len(tab)
+    cnt = 1
+    m_cnt = 1
+
+    for i in range(1,length):
+        cnt = 1
+        k = 1
+        if t[i] % 2 == 0:
+            continue
+        elif t[i] == t[i-1]:
+            cnt += 1
+            while i-1-k >= 0 and i+k <= length:
+                if t[i+k]%2==0 or t[i-1-k]%2==0:
+                    break
+                if t[i+k] != t[i-1-k]:
+                    break
+                cnt += 2
+                k += 1
+        else:
+            while i-k > 0 and i+k < length:
+                if t[i+k]%2==0 or t[i-k]%2==0:
+                    break
+                if t[i+k] != t[i-k]:
+                    break
+                cnt += 2
+                k += 1
+
+        if cnt > m_cnt:
+            m_cnt = cnt
+
+    if m_cnt == 1:
+        return 0
+    
+    else:
+        return m_cnt
+
+def ex19(tab):
+#Zadanie 19. Dana jest N-elementowa tablica t wypełniona liczbami naturalnymi. Prosze napisac funkcje,
+#która zwraca długosc najdłuzszego, spójnego podciagu rosnacego dla którego suma jego elementów jest
+#równa sumie indeksów tych elementów. Do funkcji nalezy przekazac tablice, funkcja powinna zwrócic długosc
+#znalezionego podciagu lub wartosc 0 jezeli taki podciag nie istnieje.
+    length = len(tab)
+    i = 0
+    m_cnt = 1
+
+    while i < length:
+        index_sum = i
+        k = 0
+        suma = tab[i]
+        cnt = 1
+        while i+k+1 < length and tab[i+k] < tab[i+k+1]: # sumujemy wyrazy i indexy wyrazów ciągów rosnących
+            suma += tab[i+k+1]
+            index_sum += i+k+1
+            k += 1
+            cnt += 1
+        while k != 0 and index_sum != suma:
+            suma -= tab[i+k]
+            index_sum -= i+k
+            k -= 1
+            cnt -= 1
+        if index_sum == suma and cnt > m_cnt:
+            m_cnt = cnt
+        i += 1
+    
+    if m_cnt == 1:
+        return 0
+    else:
+        return m_cnt
+
+#def ex20(tab):
+#Zadanie 20. Dana jest N-elementowa tablica t zawierajaca liczby naturalne mniejsze od 1000. Prosze napisac
+#funkcje, która zwraca długosc najdłuzszego, spójnego fragmentu tablicy, dla którego w iloczynie jego elementów
+#kazdy czynniki pierwszy wystepuje co najwyzej raz. Na przykład dla tablicy t=[2,23,33,35,7,4,6,7,5,11,13,22]
+#wynikiem jest wartosc 5.
+
 
 
 if __name__ == "__main__":
-    print(ex15())
+    #N = 5 #int(input("N: "))
+    t = [2,23,33,35,7,4,6,7,5,11,13,22]#gen_rnd_tab(N,1,999)
+    N = len(t)
+    t1 = [i for i in range(N)] # list comprehension - bardzo fajne narzędzie
+    print(t)
+    print(t1)
+    print(ex20(t))
