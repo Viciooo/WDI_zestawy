@@ -252,17 +252,6 @@ def ex7():
 
     return False
 
-################################################# do ex8 poniżej
-
-    def div_check(n):
-        l = []
-    for i in range(2,n+1):
-        if n % i == 0:
-            l.append(i)
-            while n % i == 0:
-                n //= i
-    return l
-
 def ex8():
 #Zadanie 8. Dana jest N-elementowa tablica t zawierajaca liczby naturalne. W tablicy mozemy przeskoczyc
 #z pola o indeksie k o n pól w prawo jezeli wartosc n jest czynnikiem pierwszym liczby t[k]. Napisac funkcje
@@ -528,18 +517,56 @@ def ex16():
     
     return True
 
-def ex17():
+def convert_to_bin(n,length):
+    l =[]
+    while n // 2 != 0:
+        l.append(n%2)
+        n //=2
+    l.append(n%2)
+    while len(l)<length:
+        l.append(0)
+    return l
+
+def ex17(t1,t2):
 #Zadanie 17. Dane sa dwie N-elementowe tablice t1 i t2 zawierajace liczby naturalne. Z wartosci w obu
 #tablicach mozemy tworzyc sumy. „Poprawna” suma to taka, która zawiera co najmniej jeden element (z
 #tablicy t1 lub t2) o kazdym indeksie. Na przykład dla tablic: t1 = [1,3,2,4] i t2 = [9,7,4,8] poprawnymi
-#sumami sa na przykład 1+3+2+4, 9+7+4+8, 1+7+3+8, 1+9+7+2+4+8. Prosze napisac funkcje generujaca
+#sumami sa na przykład 1+3+2+4, 9+7+4+8, 1+7+2+8, 1+9+7+2+4+8. Prosze napisac funkcje generujaca
 #i wypisujaca wszystkie poprawne sumy, które sa liczbami pierwszymi. Do funkcji nalezy przekazac dwie
 #tablice, funkcja powinna zwrócic liczbe znalezionych i wypisanych sum.    
-    t1 = gen_rnd_tab(10,1,100)
-    t2 = gen_rnd_tab(10,1,100) 
+    cnt = 0
+    if len(t1) >= len(t2): #chcemy wiedzieć, która dłuższa bo robimy maskę do możliwie krótszej bo będziemy doklejać wyrazy z dłuższej za każdym razem
+        mask = [0]*len(t2)  #zawsze ma długość krótszej z tablic
+        tab1 = t1   #zawsze  dłuższa 
+        tab2 = t2   #krótsza
+        length = len(t2)
+    else:
+        mask = [0]*len(t1)
+        tab1 = t2   #zawsze  dłuższa
+        tab2 = t1   #krótsza
+        length = len(t1)
 
-    #wtf garek
-
+    for j in range(2**length):
+        suma1 = 0 #jeśli występuje coś z tab2 to nie ma tam z tab1 nic
+        suma2 = 0 #są oba arg z indexu i z obu tablic
+        i = 0
+        mask = convert_to_bin(j,length)
+        for i in range(len(mask)):
+            if mask[i] == 1:
+                suma1 += tab2[i]
+                suma2 += tab2[i]
+                suma2 += tab1[i]
+            elif mask[i] == 0:
+                suma1 += tab1[i]
+            suma2 += tab1[i]
+        if czy_pierwsza(suma1) == True:
+            print("Suma1: ",suma1)
+            cnt += 1
+        if czy_pierwsza(suma2) == True and suma2 != suma1:
+            print("Suma2: ",suma2)
+            cnt += 1
+            
+    return cnt
 
 
 def ex18(tab):
@@ -616,19 +643,57 @@ def ex19(tab):
     else:
         return m_cnt
 
-#def ex20(tab):
+
+def div_check(n):
+    l = []
+    for i in range(2,n+1):
+        if n % i == 0:
+            l.append(i)
+        while n % i == 0:
+            n //= i
+    return l
+
+def ex20(t):
 #Zadanie 20. Dana jest N-elementowa tablica t zawierajaca liczby naturalne mniejsze od 1000. Prosze napisac
 #funkcje, która zwraca długosc najdłuzszego, spójnego fragmentu tablicy, dla którego w iloczynie jego elementów
 #kazdy czynniki pierwszy wystepuje co najwyzej raz. Na przykład dla tablicy t=[2,23,33,35,7,4,6,7,5,11,13,22]
 #wynikiem jest wartosc 5.
 
+    #używamy naszej funkcji div check jeśli po podzieleniu przez każdy z dzielników liczba jest != od 1 to odrzucamy ten iloczyn
+    #iloczynu szukamy w następujący sposób:
+    #1)  zaczynamy i'tego indexu i patrzymy na podzielniki iloczynu t[i]*t[i+k] jeśli iloczyn podzielony przez div check != 0 to 
+    # zwiększam i o 1, jeśli == to cnt +=1 i k +=1
+    #2)sprawdzam czy m_cnt < cnt jeśli tak to zamieniam wartość
+    m_cnt = 1
+    l = []
 
+    for i in range(1,len(t)):
+        k = 1
+        cnt = 1
+        iloczyn = t[i-1]*t[i]
+        while i+k < len(t):
+            l = div_check(iloczyn)
+            for j in range(len(l)):
+                iloczyn //= l[j]
+            if iloczyn == 1:
+                cnt += 1
+                iloczyn *= t[i+k]
+                k += 1
+            else:
+                break
+        if m_cnt < cnt:
+            m_cnt = cnt
+    
+    return m_cnt
 
 if __name__ == "__main__":
     #N = 5 #int(input("N: "))
-    t = [2,23,33,35,7,4,6,7,5,11,13,22]#gen_rnd_tab(N,1,999)
-    N = len(t)
-    t1 = [i for i in range(N)] # list comprehension - bardzo fajne narzędzie
-    print(t)
-    print(t1)
-    print(ex20(t))
+    #t = [2,23,33,35,7,4,6,7,5,11,13,22]#gen_rnd_tab(N,1,999)
+    #N = len(t)
+    #t1 = [i for i in range(N)] # list comprehension - bardzo fajne narzędzie
+    #print(t)
+    #print(t1)
+    #print(ex20(t))
+    #t1 = [2,3,1]#gen_rnd_tab(10,1,100)
+    #t2 = [5,1,2]#gen_rnd_tab(10,1,100)
+    #print(ex17(t1,t2))
