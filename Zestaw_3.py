@@ -74,7 +74,7 @@ def ex3():
 
     for i in range(2,N+1):
         l_N.append(i)
-    
+       
     while l_N[x] <= N**(0.5):
         y = x + 1
         while y < len(l_N):
