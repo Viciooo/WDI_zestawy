@@ -1,16 +1,14 @@
 def ex1():
 #Zadanie 1. Dana jest tablica T[N][N]. Prosze napisac funkcje wypełniajaca tablice kolejnymi liczbami
 #naturalnymi po spirali.
-    N = 5 # dim tablicy
+    N = 5 #ilość el
     k = 2 #wartość od której startujemy
     t = N*[0]
 
     for i in range(N):  #t[row][column]
         t[i] = N*[0]
     t[0][0] = 1
-    
-    #rowsAmt = N - 1 # ilośc znaków do wpisania w rzędzie
-    #columnsAmt = N - 2 # ilośc znaków do wpisania w kolumnie - startowo
+
     r = 0 #row index
     c = 0 #column index
 
@@ -35,8 +33,6 @@ def ex1():
             r -= 1
             t[r][c] = k
             k += 1
-
-    
     
     for i in range(len(t)):
        print(t[i])
