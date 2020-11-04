@@ -86,7 +86,6 @@ def IfHasOneEvenDigit(tab):
     for i in range(len(tab)):
         if tab[i] == 0:
             cnt += 1
-            continue
         while tab[i] % 10 != 0:
             tmp = tab[i] % 10
             if tmp % 2 == 0:
@@ -190,18 +189,15 @@ def ex5(t):
                     max_wynik = wynik
                     col = j
                     row = i 
-    
-        
-
 
     print("[",row,"]","[",col,"]", sep = '')
 
 if __name__ == "__main__":
     t = ex1(3)
-    t[0][0] = 0
-    t[0][1] = 0
-    t[0][2] = 0
+    t[1][1] = 0
+   # t[0][1] = 0
+    #t[0][2] = 0
     for i in range(len(t)):
        print(t[i])
-    #print(ex3(t)) 
-    ex5(t)
+    print(ex3(t)) 
+    #ex5(t)
