@@ -149,6 +149,12 @@ def SearchForBorS(tab,bORs): # biggest or smallest
                  val_saver = tab[i]
     return i_saver
 
+def ColumnSum(t,c):
+    columns = 0
+    for r in range(len(t)):
+        columns += t[r][c]
+    return columns
+
 def ex4(t):
 #Zadanie 4. Dana jest tablica T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która
 #zwraca wiersz i kolumne dowolnego elementu, dla którego iloraz sumy elementów w kolumnie w którym lezy
@@ -156,24 +162,23 @@ def ex4(t):
     N = len(t)
     columns = [0]*N
     rows = [0]*N
-    tmp = FlipTheTab(t)
 
     for i in range(N):
         rows[i] = RowSum(t[i])
-        columns[i] = RowSum(tmp[i])
+        columns[i] = ColumnSum(t,i)
     #szukamy el największego z columns i el najmniejszy z rows
     print("[",SearchForBorS(rows,"s"),"]","[",SearchForBorS(columns,"b"),"]", sep = '')
+    return
 
 def ex5(t): 
 #Zadanie 5. Poprzednie zadanie z tablica wypełniona liczbami całkowitymi.    
     N = len(t)
     columns = [0]*N
     rows = [0]*N
-    tmp = FlipTheTab(t)
 
     for i in range(N):
         rows[i] = RowSum(t[i])
-        columns[i] = RowSum(tmp[i])
+        columns[i] = ColumnSum(t,i)
     #szukamy el największego z columns i el najmniejszy z rows
     index = 0
     while rows[index] == 0:
@@ -192,12 +197,114 @@ def ex5(t):
 
     print("[",row,"]","[",col,"]", sep = '')
 
-if __name__ == "__main__":
-    t = ex1(3)
-    t[1][1] = 0
-   # t[0][1] = 0
-    #t[0][2] = 0
+def Convert2DmTo1Dm(t): #zapisuje dwuwymiarową wiersz po wierszu jako jednowymiarową
+    N = len(t)
+    tab = []
+    for x in range(N):
+        for y in range(N):
+            tab.append(t[x][y])
+    return tab
+
+def Uniq(tab): #zwraca tablicę z elementami, które się nie powtarzają w tablicy którą przetwarza
+    i = 0
+    N = len(tab)
+    tab.sort()
+    while i+1 < len(tab):
+        duplikat = False
+        while i+1 < len(tab) and tab[i] == tab[i+1]:
+            del tab[i+1]
+            duplikat = True
+        if duplikat == True:
+            del tab[i]
+        if duplikat == False:  
+            i += 1
+    for i in range(N):
+        tab.append(0)
+    return tab
+
+def RowsByFirstIndexSort(t):
+    tmp = 0
+    for r in range(1,len(t)):
+        j = r
+        while r > 0 and t[r][0] < t[r-1][0]:
+            t[r-1], t[r] = t[r], t[r-1]
+            r -= 1
+    return t
+
+def ex6(t,T2):
+#nieoptymalna wersja - sortuje el posortowane
+#Zadanie 6. Dane sa dwie tablice mogace pomiescic taka sama liczbe elementów: T1[N][N] i T2[M], gdzie
+#M=N*N. W kazdym wierszu tablicy T1 znajduja sie uporzadkowane rosnaco (w obrebie wiersza) liczby
+#naturalne. Prosze napisac funkcje przepisujaca wszystkie singletony (liczby wystepujace dokładnie raz) z
+#tablicy T1 do T2, tak aby liczby w tablicy T2 były uporzadkowane rosnaco. Pozostałe elementy tablicy T2
+#powinny zawierac zera.
+
+    tmp = -1
+    i = 0
+
+    while len(t) > 1:
+
+        if len(t[0]) == 0:
+                del t[0]
+
+        elif len(t[1]) == 0:
+                del t[1]
+
+        t = RowsByFirstIndexSort(t)
+
+        if t[0][0] == tmp:
+            del t[0][0] 
+
+        elif t[1][0] == t[0][0]:
+            tmp = t[0][0]
+            del t[0][0],t[1][0]
+
+        else:
+            T2[i] = t[0][0]
+            del t[0][0]
+
+            if len(t[0]) == 0:
+                del t[0]
+
+            i += 1
+
+    for j in range(len(t[0])):
+        T2[i] = t[0][j]
+        i += 1
+
+    return T2
+
+#def ex7():
+#Zadanie 7. Dane sa dwie tablice mogace pomiescic taka sama liczbe elementów: T1[N][N] i T2[M], gdzie
+#M=N*N. W kazdym wierszu tablicy T1 znajduja sie uporzadkowane niemalejaco (w obrebie wiersza) liczby
+#naturalne. Prosze napisac funkcje przepisujaca wszystkie liczby z tablicy T1 do T2, tak aby liczby w tablicy
+#T2 były uporzadkowane niemalejaco.
+    
+
+#def ex8():
+#Zadanie 8. Dana jest tablica T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która w
+#poszukuje w tablicy najdłuzszego ciagu geometrycznego lezacego ukosnie w kierunku prawo-dół, liczacego
+#co najmniej 3 elementy. Do funkcji nalezy przekazac tablice. Funkcja powinna zwrócic informacje czy udało
+#sie znalezc taki ciag oraz długosc tego ciagu.
+
+def GenTabOfRndGrowingInts(N,start,end):
+    from random import randint
+    t = [0]*N
+    tmp = start
+    for i in range(N):
+        start = tmp
+        t[i] = [0]*N
+        for j in range(N):
+            t[i][j] = randint(start,end)
+            start = t[i][j] + 1
+    return t
+
+def Print2DmTab(t):
     for i in range(len(t)):
-       print(t[i])
-    print(ex3(t)) 
-    #ex5(t)
+        print(t[i])
+if __name__ == "__main__":
+    #t = GenTabOfRndGrowingInts(3,10,100)
+    #T2 = [0]*4**2
+    #T2 = ex6(t,T2)
+    #print(T2)
+    #Print2DmTab(t)
