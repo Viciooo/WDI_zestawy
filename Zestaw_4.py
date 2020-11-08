@@ -274,18 +274,53 @@ def ex6(t,T2):
 
     return T2
 
-#def ex7():
-#Zadanie 7. Dane sa dwie tablice mogace pomiescic taka sama liczbe elementów: T1[N][N] i T2[M], gdzie
-#M=N*N. W kazdym wierszu tablicy T1 znajduja sie uporzadkowane niemalejaco (w obrebie wiersza) liczby
-#naturalne. Prosze napisac funkcje przepisujaca wszystkie liczby z tablicy T1 do T2, tak aby liczby w tablicy
-#T2 były uporzadkowane niemalejaco.
-    
+def SearchForMaxIn2DmTab(t):
+    el_max = 0
+    for r in range(len(t)):
+        for c in range(len(t)):
+            if t[r][c] > el_max:
+                el_max = t[r][c]
+    return el_max
 
-#def ex8():
-#Zadanie 8. Dana jest tablica T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która w
-#poszukuje w tablicy najdłuzszego ciagu geometrycznego lezacego ukosnie w kierunku prawo-dół, liczacego
-#co najmniej 3 elementy. Do funkcji nalezy przekazac tablice. Funkcja powinna zwrócic informacje czy udało
-#sie znalezc taki ciag oraz długosc tego ciagu.
+def IfPrime(n): #sprawdza czy pierwsza
+    k = 2
+
+    if(n%2==0 or n==1):
+        return False
+
+    while k <= n**0.5:
+
+        if n % k == 0:
+
+            if n // k == 1:
+                return True
+            else:
+                return False
+        k += 1
+
+    return True
+
+def ex13(t):
+#Zadanie 13. Liczby naturalne a,b sa komplementarne jezeli ich suma jest liczba pierwsza. Dana jest tablica
+#T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która zeruje elementy nie posiadajace
+#liczby komplementarnej.
+    N = len(t)
+    for r in range(N):
+        for c in range(N):
+            x = 0
+            y = 0
+            while (y <= N-1 and x <= N-1):
+                print(r,c,y,x)
+                if IfPrime(t[r][c] + t[y][x]) == True and (t[r][c]+t[y][x])/2 != t[r][c]:
+                    break
+                if y == N-1 and x == N-1:
+                    t[r][c] = 0
+                if x == N-1:
+                    x = 0
+                    y += 1
+                else:
+                    x += 1
+    return t
 
 def GenTabOfRndGrowingInts(N,start,end):
     from random import randint
@@ -303,8 +338,4 @@ def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
-    #t = GenTabOfRndGrowingInts(3,10,100)
-    #T2 = [0]*4**2
-    #T2 = ex6(t,T2)
-    #print(T2)
-    #Print2DmTab(t)
+    
