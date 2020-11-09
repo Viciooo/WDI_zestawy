@@ -337,4 +337,9 @@ def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
-    
+    t = GenTabOfRndGrowingInts(3,10,100)
+    Print2DmTab(t)
+    T2 = [0]*3**2
+    print("********")
+    T2 = ex6(t,T2)
+    print(T2)
