@@ -223,9 +223,9 @@ def Uniq(tab): #zwraca tablicę z elementami, które się nie powtarzają w tabl
     return tab
 
 def RowsByFirstIndexSort(t):
-    tmp = 0
+    #tmp = 0
     for r in range(1,len(t)):
-        j = r
+        #j = r
         while r > 0 and t[r][0] < t[r-1][0]:
             t[r-1], t[r] = t[r], t[r-1]
             r -= 1
@@ -245,9 +245,11 @@ def ex6(t,T2):
 
         if len(t[0]) == 0:
                 del t[0]
+                continue
 
         elif len(t[1]) == 0:
                 del t[1]
+                continue
 
         t = RowsByFirstIndexSort(t)
 
@@ -337,13 +339,13 @@ def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
-    N = 3
+    N = 5
     t = [0] * N
     for i in range(N):
         t[i] = GenRndTabOfGrowingInts(N,0,100)
 
     Print2DmTab(t)
-    T2 = [0]*3**2
+    T2 = [0]*N**2
     print("********")
     T2 = ex6(t,T2)
     print(T2)
