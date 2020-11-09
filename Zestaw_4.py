@@ -321,27 +321,27 @@ def ex13(t):
                     x += 1
     return t
 
-def GenTabOfRndGrowingInts(N,start,end):
+def GenRndTabOfGrowingInts(N,start,end):
     from random import randint
     t = [0]*N
-    tmp = start
+    x = 0
+    iterator = end // N
+    y = x + iterator
     for i in range(N):
-        start = tmp
-        t[i] = [0]*N
-        for j in range(N):
-            t[i][j] = randint(start,end)
-            if t[i][j] == end:
-                end *= 2
-            start = t[i][j] + 1
+        t[i] = randint(x,y)
+        x += iterator
+        y += iterator
     return t
 
 def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
-    t = GenTabOfRndGrowingInts(3,10,100) # uwaga ta funkcja może się wywalać czasami - proszę być cierpliwym i klikać run the programm,
-    # aż nie będzie tak, że wartość osiągnie max z tego z czego można było losować
-    #ex6 działa dobrze tylko losowanie tabeli rosnących intów jest problematyczne
+    N = 3
+    t = [0] * N
+    for i in range(N):
+        t[i] = GenRndTabOfGrowingInts(N,0,100)
+
     Print2DmTab(t)
     T2 = [0]*3**2
     print("********")
