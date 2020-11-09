@@ -232,7 +232,6 @@ def RowsByFirstIndexSort(t):
     return t
 
 def ex6(t,T2):
-#nieoptymalna wersja - sortuje el posortowane
 #Zadanie 6. Dane sa dwie tablice mogace pomiescic taka sama liczbe elementów: T1[N][N] i T2[M], gdzie
 #M=N*N. W kazdym wierszu tablicy T1 znajduja sie uporzadkowane rosnaco (w obrebie wiersza) liczby
 #naturalne. Prosze napisac funkcje przepisujaca wszystkie singletony (liczby wystepujace dokładnie raz) z
