@@ -126,7 +126,7 @@ def ex5():
     if candidate % mod == 0:
         cnt += 1
 
-print(cnt)
+    print(cnt)
 
 def ex5():
 #Zadanie 5. Dana jest liczba naturalna o niepowtarzajacych sie cyfrach posród których nie ma zera. Ile
@@ -235,13 +235,7 @@ def ex7():
         An = n * n + n + 1
     if x % An == 0:
         print(True)
-        break
     n += 1
-
-def ex8():
-#Zadanie 8. Pewnych liczb nie mozna przedstawic jako sumy elementów spójnych fragmentów ciagu Fibonacciego,
-#np. 9,14,15,17,22. Prosze napisac program, który wczytuje liczbe naturalna n, wylicza i wypisuje
-#nastepna taka liczbe wieksza od n. Mozna załozyc, ze 0 < n < 1000.
 
 
 def ex19():
@@ -256,7 +250,7 @@ def ex19():
 
     a %= b
     while True:
-            cnt = 0
+        cnt = 0
         while a < b:
             a *= 10
             cnt += 1
@@ -275,9 +269,47 @@ def ex19():
         a %= b
         spaces -= 1
 
-    print(')')    
+    print(')')
+
+def IfDigitsDiffer(num1,num2):
+    for i in num1:
+        for j in num2:
+            if i == j:
+                return False
+    return True 
+
+def ToDiffSystem(n,div):#zamienia liczbę na system o podstawie k
+    l =[]
+    while n > 0:
+        tmp = n%div
+        if tmp >=10:
+            tmp = chr(55+tmp)
+        l.append(str(tmp))
+        n //=div
+    l = l[::-1]
+    return l  
     
+def ex20():
+#Zadanie 20. Dwie liczby naturalne sa rózno-cyfrowe jezeli nie posiadaja zadnej wspólnej cyfry. Prosze napisac
+#program, który wczytuje dwie liczby naturalne i poszukuje najmniejszej podstawy systemu (w zakresie
+#2-16) w którym liczby sa rózno-cyfrowe. Program powinien wypisac znaleziona podstawe, jezeli podstawa
+#taka nie istnieje nalezy wypisac komunikat o jej braku. Na przykład: dla liczb 123 i 522 odpowiedzia jest
+#podstawa 11 bo 123(10) = 102(11) i 522(10) = 435(11). 
+    i = 2
+    n1 = 123
+    n2 = 572
+    end = 0
+    while i <= 16:
+        l1 = ToDiffSystem(n1,i)
+        l2 = ToDiffSystem(n2,i)    
+        if IfDigitsDiffer(l1,l2) == True:
+            end += 1
+            print(i)
+            break
+        i += 1
+    if end ==0:
+        print("Brak takiego systemu")
 
 if __name__ == "__main__":
-    #print(ex1())
-    ex7()
+    ex20()
+    
