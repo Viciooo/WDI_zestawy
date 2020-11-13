@@ -75,16 +75,6 @@ def PrimeDivList(n): #zwraca listę podzielników pierwszych w postaci tablicy
             n //= i
     return l
 
-def DivList(n): #zwraca listę podzielników uporzadkowanych malejaco w postaci tablicy
-    l = []
-    l.append(n)
-    i = (n//2) + 1
-    while i >= 1:
-        if n%i == 0:
-            l.append(i)
-        i-=1
-    return l
-
 def GenRnd2DmArr(N,start,end): #generuje dwuwymiarowe tablice
     from random import randint
 
