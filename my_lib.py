@@ -41,21 +41,19 @@ def GenRndTab(length,start,end): #generuje tablicę jednowymiarową
     return tab
 
 def IfPrime(n): #sprawdza czy pierwsza
-    k = 2
-
-    if(n==1):
+    if n <=1:
         return False
-
-    while k <= n**0.5:
-
-        if n % k == 0:
-
-            if n // k == 1:
-                return True
-            else:
-                return False
-        k += 1
-
+    if n ==2 or n ==3:
+        return True
+    if n %2==0 or n%3==0:
+        return False
+    i = 6
+    while (i-1)**2<=n:
+        if n %(i-1) == 0:
+            return False
+        if n%(i+1) == 0:
+            return False
+        i+=6
     return True
 
 def ToBinary(n,length):#zamienia liczbę na binarną 
@@ -68,13 +66,23 @@ def ToBinary(n,length):#zamienia liczbę na binarną
         l.append(0)
     return l
 
-def DivList(n): #zwraca listę podzielników w postaci tablicy
+def PrimeDivList(n): #zwraca listę podzielników pierwszych w postaci tablicy
     l = []
     for i in range(2,n+1):
         if n % i == 0:
             l.append(i)
         while n % i == 0:
             n //= i
+    return l
+
+def DivList(n): #zwraca listę podzielników uporzadkowanych malejaco w postaci tablicy
+    l = []
+    l.append(n)
+    i = (n//2) + 1
+    while i >= 1:
+        if n%i == 0:
+            l.append(i)
+        i-=1
     return l
 
 def GenRnd2DmArr(N,start,end): #generuje dwuwymiarowe tablice
