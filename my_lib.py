@@ -136,11 +136,34 @@ def SearchForBorS(tab,bORs): # biggest or smallest - szuka największego lub naj
     if bORs == "b":
         for i in range(1,N):
             if tab[i] > val_saver:
-                 i_saver = i
-                 val_saver = tab[i]
+                i_saver = i
+                val_saver = tab[i]
     if bORs == "s":
         for i in range(1,N):
             if tab[i] < val_saver:
-                 i_saver = i
-                 val_saver = tab[i]
+                i_saver = i
+                val_saver = tab[i]
     return i_saver
+def TwoDimCopy(t): #copy of 2 dimentional list/array idk
+    l = len(t)
+    new_tab = [[0]*l]*l
+    i,j = 0,0
+    for row in t:
+        for column in row:
+            new_tab[i][j] = column
+            j+=1
+        i+=1
+    return new_tab
+def OneDimCopy(t): # copy of 1 dimentioanl array/list
+    new_tab = [0]*(len(t))
+    i = 0
+    for elem in t:
+        new_tab[i] = elem
+        i+=1
+def Otoczka(t): # 0 dookola 2 dim array
+    n = len(t)
+    for n in t:
+        n.insert(0,0)
+        n.append(0,0)
+    t.insert(0,[0]*(n+2))
+    t.append([0]*(n+2))
