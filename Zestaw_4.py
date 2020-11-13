@@ -12,7 +12,6 @@ def ex1(N):
     c = 0 #column index
 
     while k  <= N*N:
-
         while c+1< N and t[r][c+1] == 0: # w prawo
             c += 1
             t[r][c] = k
@@ -33,7 +32,6 @@ def ex1(N):
             t[r][c] = k
             k += 1
 
-    
     return t
     #for i in range(len(t)):
     #   print(t[i])
@@ -301,26 +299,30 @@ def IfPrime(n): #sprawdza czy pierwsza
 
     return True
 
-def ex13(t):
+#def ex12():
+#Zadanie 12. Dana jest tablica T[N][N][N]. Prosze napisac funkcje, do której przekazujemy tablice wypełniona
+#liczbami wiekszymi od zera. Funkcja powinna zwracac wartosc True, jezeli na wszystkich poziomach
+#tablicy liczba elementów sasiadujacych (w obrebia poziomu) z co najmniej 6 liczbami złozonymi jest jednakowa
+#albo wartosc False w przeciwnym przypadku. 
+
+def ex13(t): # linearyzujemy tablicę - bardzo fajny sposób
 #Zadanie 13. Liczby naturalne a,b sa komplementarne jezeli ich suma jest liczba pierwsza. Dana jest tablica
 #T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która zeruje elementy nie posiadajace
 #liczby komplementarnej.
     N = len(t)
-    for r in range(N):
-        for c in range(N):
-            x = 0
-            y = 0
-            while (y <= N-1 and x <= N-1):
-                print(r,c,y,x)
-                if IfPrime(t[r][c] + t[y][x]) == True and (t[r][c]+t[y][x])/2 != t[r][c]:
-                    break
-                if y == N-1 and x == N-1:
-                    t[r][c] = 0
-                if x == N-1:
-                    x = 0
-                    y += 1
-                else:
-                    x += 1
+    for n1 in range(N**2): #to co sprawdzamy
+        r1 = (n1)//N
+        c1 = (n1)%N
+        komplementarna = False
+        for n2 in range(N**2): #czym sprawdzamy
+            if n1 == n2:
+                continue
+            r2 = (n2)//N
+            c2 = (n2)%N
+            if IfPrime(t[r1][c1] + t[r2][c2]) == True:
+                komplementarna = True               
+        if komplementarna == False:
+            t[r1][c1] = 0
     return t
 
 def GenRndTabOfGrowingInts(N,start,end):
@@ -339,13 +341,3 @@ def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
-    N = 5
-    t = [0] * N
-    for i in range(N):
-        t[i] = GenRndTabOfGrowingInts(N,0,100)
-
-    Print2DmTab(t)
-    T2 = [0]*N**2
-    print("********")
-    T2 = ex6(t,T2)
-    print(T2)
