@@ -282,28 +282,222 @@ def SearchForMaxIn2DmTab(t):
     return el_max
 
 def IfPrime(n): #sprawdza czy pierwsza
-    k = 2
-
-    if(n%2==0 or n==1):
+    if n <=1:
         return False
-
-    while k <= n**0.5:
-
-        if n % k == 0:
-
-            if n // k == 1:
-                return True
-            else:
-                return False
-        k += 1
-
+    if n ==2 or n ==3:
+        return True
+    if n %2==0 or n%3==0:
+        return False
+    i = 6
+    while (i-1)**2<=n:
+        if n %(i-1) == 0:
+            return False
+        if n%(i+1) == 0:
+            return False
+        i+=6
     return True
 
-#def ex12():
+def SearchForMini(t):
+    mini = 1000
+    for i in range(len(t)):
+        if t[i][0] < mini:
+            mini = t[i][0]
+            index = i
+    if len(t[index]) == 1:
+        del t[index]
+    else:
+        del t[index][0]
+    
+    return mini
+
+def ex7(T1,T2): #próbuję sposób z pivotem
+#Zadanie 7. Dane sa dwie tablice mogace pomiescic taka sama liczbe elementów: T1[N][N] i T2[M], gdzie
+#M=N*N. W kazdym wierszu tablicy T1 znajduja sie uporzadkowane niemalejaco (w obrebie wiersza) liczby
+#naturalne. Prosze napisac funkcje przepisujaca wszystkie liczby z tablicy T1 do T2, tak aby liczby w tablicy
+#T2 były uporzadkowane niemalejaco.
+    N = len(T1)
+    for i in range(N*N):
+        T2[i] = SearchForMini(T1)
+    return T2
+
+def ex8(t):
+#Zadanie 8. Dana jest tablica T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która w
+#poszukuje w tablicy najdłuzszego ciagu geometrycznego lezacego ukosnie w kierunku prawo-dół, liczacego
+#co najmniej 3 elementy. Do funkcji nalezy przekazac tablice. Funkcja powinna zwrócic informacje czy udało
+#sie znalezc taki ciag oraz długosc tego ciagu.
+    N = len(t)
+    r = 0
+    c = 0
+    cnt = 2
+    while N-r >= 3:
+        if N-c < 3:
+            r += 1
+            continue
+        k = 1
+        l = [0]*N
+        i = 2
+        l[0] = t[r][c]
+        l[1] = t[r+k][c+k]
+        if t[r][c] < t[r+k][c+k]:
+
+            q = t[r+k][c+k] / t[r][c]  
+
+            while r+k+1 < N and c+k+1 < N and (t[r+k+1][c+k+1])/(t[r+k][c+k]) == q:
+                l[i] = t[r+k+1][c+k+1]
+                i += 1
+                if cnt < i:
+                    cnt = i
+                k += 1
+                print(l)
+
+        elif t[r][c] >= t[r+k][c+k]:
+
+            q = t[r][c] / t[r+k][c+k]  
+
+            while r+k+1 < N and c+k+1 < N and t[r+k][c+k]/t[r+k+1][c+k+1]== q:
+                l[i] = t[r+k+1][c+k+1]
+                i += 1
+                if cnt < i:
+                    cnt = i
+                k += 1
+                print(l)
+
+        c += 1
+    if cnt == 2:
+        return 0
+    return cnt
+
+
+def ex9(t,k):
+#Zadanie 9. Dana jest tablica T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która w
+#poszukuje w tablicy kwadratu o liczbie pól bedacej liczba nieparzysta wieksza od 1, którego iloczyn 4 pól
+#naroznych wynosi k. Do funkcji nalezy przekazac tablice i wartosc k. Funkcja powinna zwrócic informacje
+#czy udało sie znalezc kwadrat oraz współrzedne (wiersz, kolumna) srodka kwadratu.
+    x = 3
+    N = len(t)
+    while x <= N:
+        r = 0
+        c = 0
+        while r+x <= N and c+x <= N:
+            iloczyn = t[r][c]*t[r][c+x-1]*t[r+x-1][c]*t[r+x-1][c+x-1]
+            if iloczyn == k:
+                print("(",c+(x//2),",",r+(x//2),")",sep='')
+                return True
+            c += 1
+            if c+x > N:
+                c = 0
+                r += 1
+        x += 2
+    return False
+
+def ex10(T):
+#Zadanie 10. Napisac funkcje która dla tablicy T[N][N], wypełnionej liczbami całkowitymi, zwraca wartosc
+#True w przypadku, gdy w kazdym wierszu i kazdej kolumnie wystepuje co najmniej jedno 0 oraz wartosc
+#False w przeciwnym przypadku.
+    N = len(T)
+    col = [0]*N
+    row = [0]*N    
+    for r in range(N):
+        for c in range(N):
+            if T[r][c] == 0:
+                col[c], row[r] = 1, 1
+    print(col,row)
+    for j in range(N):
+        if col[j] == 0 or row[j] == 0:
+            return False
+    return True
+
+def ConvertToOccurenceTab(n):
+    tab = [0]*10
+    while n != 0:
+        tab[n%10] = 1
+        n //= 10
+    return tab
+
+def ex11(t):
+#Zadanie 11. Dwie liczby naturalne sa „przyjaciółkami jezeli zbiory cyfr z których zbudowane sa liczby
+#sa identyczne. Na przykład: 123 i 321, 211 i 122, 35 3553. Dana jest tablica T[N][N] wypełniona liczbami
+#naturalnymi. Prosze napisac funkcje, która dla tablicy T zwraca ile elementów tablicy sasiaduje wyłacznie z
+#przyjaciółkami
+    N = len(t)
+    cnt = 0
+
+    for r in range(N):
+        for c in range(N):
+            tab1 = ConvertToOccurenceTab(t[r][c])
+            if r > 0:
+                tab2 = ConvertToOccurenceTab(t[r-1][c])
+                if tab2 != tab1:
+                    continue
+            if r < N-1:
+                tab2 = ConvertToOccurenceTab(t[r+1][c])
+                if tab2 != tab1:
+                    continue
+            if c > 0 and r > 0:
+                tab2 = ConvertToOccurenceTab(t[r-1][c-1])
+                if tab2 != tab1:
+                    continue
+            if c > 0 and r < N-1:
+                tab2 = ConvertToOccurenceTab(t[r+1][c-1])
+                if tab2 != tab1:
+                    continue
+            if c < N-1 and r > 0:
+                tab2 = ConvertToOccurenceTab(t[r-1][c+1])
+                if tab2 != tab1:
+                    continue
+            if c < N-1 and r < N-1:
+                tab2 = ConvertToOccurenceTab(t[r+1][c+1])
+                if tab2 != tab1:
+                    continue
+            cnt += 1
+
+    return cnt
+
+def IfComplex(n): #sprawdza czy złożona
+    if n <=1:
+        return 0
+    if n ==2 or n ==3:
+        return 0
+    if n %2==0 or n%3==0:
+        return 1
+    i = 6
+    while (i-1)**2<=n:
+        if n %(i-1) == 0:
+            return 1
+        if n%(i+1) == 0:
+            return 1
+        i+=6
+    return 0
+
+def ex12(t):
 #Zadanie 12. Dana jest tablica T[N][N][N]. Prosze napisac funkcje, do której przekazujemy tablice wypełniona
 #liczbami wiekszymi od zera. Funkcja powinna zwracac wartosc True, jezeli na wszystkich poziomach
 #tablicy liczba elementów sasiadujacych (w obrebia poziomu) z co najmniej 6 liczbami złozonymi jest jednakowa
-#albo wartosc False w przeciwnym przypadku. 
+#albo wartosc False w przeciwnym przypadku.
+    N = len(t)
+    tab = [0]*N
+    for p in range(N):
+        for r in range(N):
+            for c in range(N):
+                cnt = 0
+                if r > 0:
+                    cnt += IfComplex(t[p][r-1][c])
+                if r < N-1:
+                    cnt += IfComplex(t[p][r+1][c])
+                if c > 0 and r > 0:
+                    cnt += IfComplex(t[p][r-1][c-1])
+                if c > 0 and r < N-1:
+                    cnt += IfComplex(t[p][r+1][c-1])
+                if c < N-1 and r > 0:
+                    cnt += IfComplex(t[p][r-1][c+1])
+                if c < N-1 and r < N-1:
+                    cnt += IfComplex(t[p][r+1][c+1])
+                if cnt >= 6:
+                    tab[p] += 1
+        if p != 0 and tab[p] != tab[p-1]:
+            return False
+
+    return True
 
 def ex13(t): # linearyzujemy tablicę - bardzo fajny sposób
 #Zadanie 13. Liczby naturalne a,b sa komplementarne jezeli ich suma jest liczba pierwsza. Dana jest tablica
@@ -324,6 +518,13 @@ def ex13(t): # linearyzujemy tablicę - bardzo fajny sposób
         if komplementarna == False:
             t[r1][c1] = 0
     return t
+
+#!!def ex14():
+#Zadanie 14. Dwie liczby naturalne sa zgodne jezeli w zapisie dwójkowym zawieraja te sama liczbe jedynek,
+#np. 22 = 101102 i 14 = 11102. Dane sa tablice T1[N1][N1] T2[N2][N2], gdzie N2¿N1. Prosze napisac funkcje,
+#która sprawdza czy istnieje takie połozenie tablicy T1 wewnatrz tablicy T2, przy którym liczba zgodnych
+#elementów jest wieksza od 33%. Do funkcji nalezy przekazac tablice T1 i T2. Obie oryginalne tablice powinny
+#pozostac nie zmieniane.
 
 def GenRndTabOfGrowingInts(N,start,end):
     from random import randint
