@@ -519,12 +519,54 @@ def ex13(t): # linearyzujemy tablicę - bardzo fajny sposób
             t[r1][c1] = 0
     return t
 
-#!!def ex14():
+def CntOddDiv(n):
+    cnt = 0 #jeśli zniszczy n to będziemy dzielić tmp
+    while n != 0:
+        if n % 2 == 1:
+            cnt += 1
+        n //= 2
+    return cnt
+
+def ConvertToAmountOf1Tab(t):
+    N = len(t)
+    tab = [0]*N
+    for i in range(N):
+        tab[i] = [0]*N
+    for r in range(N):
+        for c in range(N):
+            tab[r][c] = CntOddDiv(t[r][c])
+    return tab
+
+def ex14(T1,T2):
 #Zadanie 14. Dwie liczby naturalne sa zgodne jezeli w zapisie dwójkowym zawieraja te sama liczbe jedynek,
-#np. 22 = 101102 i 14 = 11102. Dane sa tablice T1[N1][N1] T2[N2][N2], gdzie N2¿N1. Prosze napisac funkcje,
+#np. 22 = 10110 i 14 = 1110. Dane sa tablice T1[N1][N1] T2[N2][N2], gdzie N2>=N1. Prosze napisac funkcje,
 #która sprawdza czy istnieje takie połozenie tablicy T1 wewnatrz tablicy T2, przy którym liczba zgodnych
 #elementów jest wieksza od 33%. Do funkcji nalezy przekazac tablice T1 i T2. Obie oryginalne tablice powinny
 #pozostac nie zmieniane.
+    N1 = len(T1)
+    r1 = 0 
+    c1 = 0
+    N2 = len(T2)
+    r2 = 0 
+    c2 = 0
+    tab1 = ConvertToAmountOf1Tab(T1) 
+    tab2 = ConvertToAmountOf1Tab(T2)
+    for r2 in range(N2-N1):
+        for c2 in range(N2-N1):
+            zgodnosc = 0
+            for r1 in range(N1):
+                for c1 in range(N1):
+                    if tab1[r1][c1] == tab2[r1+r2][c1+c2]:
+                        zgodnosc += 1
+            if zgodnosc > (N1*N1)/3:
+                return True
+    return False
+
+#!!def ex15(T):
+#Zadanie 15. Dana jest tablica T[N][N], wypełniona liczbami naturalnymi. Prosze napisac funkcje, która
+#odpowiada na pytanie, czy w tablicy istnieje wiersz, w którym kazda liczba zawiera co najmniej jedna cyfre
+#bedaca liczba pierwsza?
+
 
 def GenRndTabOfGrowingInts(N,start,end):
     from random import randint
@@ -542,3 +584,6 @@ def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
+    T1 = GenRnd2DmArr(3,10,50)
+    T2 = GenRnd2DmArr(7,10,50)
+    print(ex14(T1,T2))
