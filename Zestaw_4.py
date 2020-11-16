@@ -138,13 +138,13 @@ def SearchForBorS(tab,bORs): # biggest or smallest
     if bORs == "b":
         for i in range(1,N):
             if tab[i] > val_saver:
-                 i_saver = i
-                 val_saver = tab[i]
+                i_saver = i
+                val_saver = tab[i]
     if bORs == "s":
         for i in range(1,N):
             if tab[i] < val_saver:
-                 i_saver = i
-                 val_saver = tab[i]
+                i_saver = i
+                val_saver = tab[i]
     return i_saver
 
 def ColumnSum(t,c):
@@ -562,11 +562,151 @@ def ex14(T1,T2):
                 return True
     return False
 
-#!!def ex15(T):
+def ex15(t):
 #Zadanie 15. Dana jest tablica T[N][N], wypełniona liczbami naturalnymi. Prosze napisac funkcje, która
 #odpowiada na pytanie, czy w tablicy istnieje wiersz, w którym kazda liczba zawiera co najmniej jedna cyfre
 #bedaca liczba pierwsza?
+    N = len(t)
+    for r in range(N):
+        cnt = 0
+        for c in range(N):
+            while t[r][c] != 0:
+                if IfPrime(t[r][c] % 10) == True:
+                    cnt += 1
+                    break
+                t[r][c] //= 10
+        if cnt == N:
+            return True
+    return False
 
+def ex16(t):
+#Zadanie 16. Dana jest tablica T[N][N], wypełniona liczbami naturalnymi. Prosze napisac funkcje która
+#odpowiada na pytanie, czy w tablicy kazdy wiersz zawiera co najmniej jedna liczba złozona wyłacznie z cyfr
+#bedacych liczbami pierwszymi?
+    N = len(t)
+    bCnt = 0
+    for r in range(N):
+        for c in range(N):
+            i = 0
+            cnt = 0
+            while t[r][c] != 0:
+                i += 1
+                if IfPrime(t[r][c] % 10) == True:
+                    cnt += 1
+                t[r][c] //= 10
+            if i == cnt:
+                bCnt += 1
+                break
+        if bCnt != r+1:
+            return False
+    return True
+
+def ex17(t):
+#Zadanie 17. Dana jest tablica T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje która
+#zwraca wiersz i kolumne dowolnego elementu, dla którego suma otaczajacych go elementów jest najwieksza.
+    N = len(t)
+    maxSuma = 0
+    for r in range(N):
+        for c in range(N):
+            suma = 0
+            if r > 0:
+                suma += t[r-1][c]
+            if r < N-1:
+                suma += t[r+1][c]
+            if c > 0 and r > 0:
+                suma += t[r-1][c-1]
+            if c > 0 and r < N-1:
+                suma += t[r+1][c-1]
+            if c < N-1 and r > 0:
+                suma += t[r-1][c+1]
+            if c < N-1 and r < N-1:
+                suma += t[r+1][c+1]
+            if suma > maxSuma:
+                maxSuma = suma
+                mR = r
+                mC = c
+
+    print("(",mR,",",mC,")",sep='')
+
+def ex18(T):
+#Zadanie 18. Dana jest tablica T[N][N] wypełniona liczbami całkowitymi. Prosze napisac funkcje, która
+#wyszuka spójny podciag elementów lezacy poziomo lub pionowo o najwiekszej sumie. Maksymalna długosc
+#podciagu moze wynosic 10 elementów. Do funkcji nalezy przekazac tablice T, funkcja powinna zwrócic sume
+#maksymalnego podciagu.
+    N = len(T)
+    m_suma = 0
+    
+    for r in range(N):
+        x = 1
+        while x < N:
+            s = 0 #startowy numer kolumny
+            while s+x < N:
+                suma = 0
+                for c in range(s,s+x+1):
+                    suma += T[r][c]
+                if suma > m_suma:
+                    print(r,c,s,s+x)
+                    m_suma = suma
+                s += 1
+            x += 1
+    
+    for c in range(N):
+        x = 1
+        while x < N:
+            s = 0 #startowy numer wiersza
+            while s+x < N:
+                suma = 0
+                for r in range(s,s+x+1):
+                    suma += T[r][c]
+                if suma > m_suma:
+                    print(r,c,s,s+x)
+                    m_suma = suma
+                s += 1
+            x += 1
+
+    return m_suma
+
+def ex19(T,iloczyn):
+#Zadanie 19. Dana jest tablica T[N][N] wypełniona liczbami naturalnymi. Prosze napisac funkcje, która
+#zwraca liczbe par elementów, o okreslonym iloczynie, takich ze elementy sa odległe o jeden ruch skoczka
+#szachowego.
+    N = len(T)
+    cnt = 0
+    for r in range(N):
+        for c in range(N):
+            if T[r][c] <= iloczyn:
+                szukana = iloczyn / T[r][c]
+                if r+2<N and c+1<N:
+                    if szukana == T[r+2][c+1]:
+                        cnt += 1
+                if r+2<N and c-1>0:
+                    if szukana == T[r+2][c-1]:
+                        cnt += 1
+                if r+1<N and c+2<N:
+                    if szukana == T[r+1][c+2]:
+                        cnt += 1
+                if r+1<N and c-2>0:
+                    if szukana == T[r+1][c-2]:
+                        cnt += 1
+                if r-2>0 and c+1<N:
+                    if szukana == T[r-2][c+1]:
+                        cnt += 1
+                if r-2>0 and c-1>0:
+                    if szukana == T[r-2][c-1]:
+                        cnt += 1
+                if r-1>0 and c+2<N:
+                    if szukana == T[r-1][c+2]:
+                        cnt += 1
+                if r-1>0 and c-2>0:
+                    if szukana == T[r-1][c-2]:
+                        cnt += 1
+    return cnt//2
+
+#??def ex20(T):
+#Zadanie 20. Dana jest tablica T[N][N] (reprezentujaca szachownice) wypełniona liczbami naturalnymi.
+#Prosze napisac funkcje która ustawia na szachownicy dwie wieze, tak aby suma liczb na „szachowanych”
+#przez wieze polach była najwieksza. Do funkcji nalezy przekazac tablice, funkcja powinna zwrócic połozenie
+#wiez. Uwaga- zakładamy, ze wieza szachuje cały wiersz i kolumne z wyłaczeniem pola na którym stoi
 
 def GenRndTabOfGrowingInts(N,start,end):
     from random import randint
@@ -584,6 +724,6 @@ def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
-    T1 = GenRnd2DmArr(3,10,50)
-    T2 = GenRnd2DmArr(7,10,50)
-    print(ex14(T1,T2))
+    T1 = GenRnd2DmArr(5,1,10)
+    Print2DmTab(T1)
+    print(ex19(T1,12))
