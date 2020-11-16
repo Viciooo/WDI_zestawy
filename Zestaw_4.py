@@ -702,11 +702,52 @@ def ex19(T,iloczyn):
                         cnt += 1
     return cnt//2
 
-#??def ex20(T):
+def SumRows(t):
+    N = len(t)
+    tab = [0]*N
+    for r in range(N):
+        for c in range(N):
+            tab[r] += t[r][c]
+    return tab
+
+def SumColumns(t):
+    N = len(t)
+    tab = [0]*N
+    for c in range(N):
+        for r in range(N):
+            tab[c] += t[r][c]
+    return tab
+
+def ex20(T):
 #Zadanie 20. Dana jest tablica T[N][N] (reprezentujaca szachownice) wypełniona liczbami naturalnymi.
 #Prosze napisac funkcje która ustawia na szachownicy dwie wieze, tak aby suma liczb na „szachowanych”
 #przez wieze polach była najwieksza. Do funkcji nalezy przekazac tablice, funkcja powinna zwrócic połozenie
 #wiez. Uwaga- zakładamy, ze wieza szachuje cały wiersz i kolumne z wyłaczeniem pola na którym stoi
+    m1 = 0
+    m2 = 0
+    r1 = 0
+    c1 = 0
+    r2 = 0
+    c2 = 0
+    N = len(T)
+    rows = SumRows(T)
+    columns = SumColumns(T)
+    for r in range(N):
+        for c in range(N):
+            suma = rows[r] + columns[c] - 2*T[r][c]
+            if suma >= m1:
+                m2 = m1
+                r2 = r1
+                c2 = c1
+                m1 = suma
+                r1 = r
+                c1 = c
+            elif suma > m2:
+                m2 = suma
+                r2 = r
+                c2 = c
+    print("(",r1,",",c1,")","(",r2,",",c2,")",sep='')
+    print(m1,m2)
 
 def GenRndTabOfGrowingInts(N,start,end):
     from random import randint
@@ -724,6 +765,7 @@ def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 if __name__ == "__main__":
-    T1 = GenRnd2DmArr(5,1,10)
+    T1 = GenRnd2DmArr(3,1,5)
     Print2DmTab(T1)
-    print(ex19(T1,12))
+    print("**********")
+    ex20(T1)
