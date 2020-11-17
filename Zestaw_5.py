@@ -3,8 +3,8 @@
 #m.in. dodawanie, odejmowanie, mnozenie, dzielenie, potegowanie, skracanie, wypisywanie i wczytywanie.
 
 def ReadFract():
-    l = int(input("l:"))
-    m = int(input("m:"))
+    l = int(input("t[0]:"))
+    m = int(input("t[1]:"))
     if m == 0:
         return "Błąd m == 0"
     tup = (l,m)
@@ -86,6 +86,80 @@ def ex2():
     PrintFract(x1)
     PrintFract(y1)
 
+def ex3(t):
+#Zadanie 3. Na szachownicy o wymiarach 100 na 100 umieszczamy N hetmanów (N < 100). Połozenie
+#hetmanów jest opisywane przez tablice dane = [(w1, k1), (w2, k2), (w3, k3), ...(wN, kN)] Prosze napisac funkcje,
+#która odpowiada na pytanie: czy zadne z dwa hetmany sie nie szachuja? Do funkcji nalezy przekazac
+#połozenie hetmanów.
+    N = len(t)
+    M = 100
+    tab = [0]*M
+    r = 0
+    c = 0
+    for i in range(M):
+        tab[i]=[0]*M
+    for j in range(N):
+        q = t[j] #qween
+        for r in range(M):
+            if tab[r][q[1]] == -1:
+                return False
+            tab[r][q[1]] = 1
+        for c in range(M):
+            if tab[q[0]][c] == -1:
+                return False
+            tab[q[0]][c] = 1
+
+        r, c = q[0], q[1]
+        while r >= 0 and c >= 0:
+            if tab[r][c] == -1:
+                return False
+            tab[r][c] = 1
+            r-=1
+            c-=1
+
+        r, c = q[0], q[1]
+        while r >= 0 and c < M:
+            if tab[r][c] == -1:
+                return False
+            tab[r][c] = 1
+            r-=1
+            c+=1
+
+        r, c = q[0], q[1]
+        while r < M and c < M:
+            if tab[r][c] == -1:
+                return False
+            tab[r][c] = 1
+            r+=1
+            c+=1
+
+        r, c = q[0], q[1]
+        while r < M and c >= 0:
+            if tab[r][c] == -1:
+                return False
+            tab[r][c] = 1
+            r+=1
+            c-=1
+
+        tab[q[0]][q[1]] = -1
+
+    Print2DmTab(tab)
+    return True
+
+#?def ex4():
+#Zadanie 4. Dana jest tablica zawierajaca liczby wymierne. Prosze napisac funkcje, która policzy wystepujace
+#w tablicy ciagi arytmetyczne (LA) i geometryczne (LG) o długosci wiekszej niz 2. Funkcja powinna
+#zwrócic wartosc 1 gdy LA > LG, wartosc -1 gdy LA < LG oraz 0 gdy LA = LG.
+
+
+def Print2DmTab(t):
+    for i in range(len(t)):
+        print(t[i])
 
 if __name__ == "__main__":
-    ex2()
+    N = 5
+    t = [0]*N
+    print("Podaj pola N hetmanów należące do [0,99]") #w kolejności row column
+    for i in range(N):
+        t[i] = ReadFract()
+    print(ex3(t))
