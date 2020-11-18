@@ -232,10 +232,73 @@ def ex5(t):
         s += 1
     return False
 
+def cAdd(t1,t2):
+    return (t1[0]+t2[0],t1[1]+t2[1])
+
+def cSubtr(t1,t2):
+    return (t1[0]-t2[0],t1[1]-t2[1])
+
+def cMulti(t1,t2):
+    return (t1[0]*t2[0]-(t1[1]*t2[1]),t1[0]*t2[1]+t1[1]*t2[0])
+
+def cDiv(t1,t2):
+    w = cMulti(t1,(t2[0],-t2[1]))
+    v = cMulti(t2,(t2[0],-t2[1]))
+    return (w[0]/v[0],w[1]/v[0])
+
+def cToPow(t,n):
+    if n == 0:
+        return (1,0)
+    re = t[0]
+    im = t[1]
+    tab = [t[0],t[1]]
+    for _ in range(1,n):
+        tmp = cMulti((tab[0],tab[1]),(re,im))
+        tab[0] = tmp[0]
+        tab[1] = tmp[1]
+        del tmp
+    tmp = (tab[0],tab[1])
+    return tmp
+
+def cPrint(t):
+    print(t[0]," + (",t[1],"i)",sep='')
+
+def cRead():
+    re = int(input("re:"))
+    im = int(input("im:"))
+    return (re,im)
+
+#def cSqrt(t):
+#    x_
+
+#Zadanie 6. Liczby zespolone sa reprezentowane przez krotke (re, im). Gdzie: re - czesc rzeczywista liczby,
+#im - czesc urojona liczby. Prosze napisac podstawowe operacje na liczbach zespolonych, m.in. dodawanie,
+#odejmowanie, mnozenie, dzielenie, potegowanie, wypisywanie i wczytywanie.
+
+def ex7(a,b,c):
+#Zadanie 7. Uzywajac funkcji z poprzedniego zadania prosze napisac funkcje rozwiazujaca równanie kwadratowe
+#o współczynnikach zespolonych.
+    #równanie postaci x^2*a + bx +c = 0
+    delta = cSubtr(cToPow(b,2),cMulti((4,0),cMulti(a,c)))
+    if delta[0] < 0 and delta[1] == 0:
+        p_delta = (0,(delta[0]*(-1))**0.5)
+    elif delta[0] >= 0 and delta[1] == 0:
+        p_delta = ((delta[0])**0.5,0)
+    else:
+        p_delta = ((((delta[0]+(delta[0]**2+delta[1]**2)**0.5)/2)**0.5),0)
+
+
+    x1 = cDiv(cAdd(cMulti(b,(-1,0)),p_delta),cMulti(a,(2,0)))
+    x2 = cDiv(cSubtr(cMulti(b,(-1,0)),p_delta),cMulti(a,(2,0)))
+    cPrint(x1)
+    if x1 != x2:
+        cPrint(x2)
+
 def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 
 if __name__ == "__main__":
-    t = [(1,1),(5,1),(1,5),(5,5),(10,1)]
-    print(ex5(t))
+    #t = [(1,1),(5,1),(1,5),(5,5),(10,1)]
+    #cPrint((2,-3))
+    ex7((1,3),(1,-2),(5,3))
