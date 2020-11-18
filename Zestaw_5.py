@@ -47,7 +47,7 @@ def FractToTheNPow(t1,n):
     wynik = (lw,mw)
     return wynik
 
-def ShortenFract(t1):
+def Sh(t1): #shorten fract
     lw = t1[0]
     mw = t1[1]
     i = 2
@@ -81,8 +81,8 @@ def ex2():
     diff_wv = SubtrFract(v1,w1)
     y = DivFract(diff_wv,diff_y)
     x = AddFract(MultFract(d1,y),v1)
-    x1 = ShortenFract(x)
-    y1 = ShortenFract(y)
+    x1 = Sh(x)
+    y1 = Sh(y)
     PrintFract(x1)
     PrintFract(y1)
 
@@ -146,20 +146,96 @@ def ex3(t):
     Print2DmTab(tab)
     return True
 
-#?def ex4():
+def ex4(t):
 #Zadanie 4. Dana jest tablica zawierajaca liczby wymierne. Prosze napisac funkcje, która policzy wystepujace
 #w tablicy ciagi arytmetyczne (LA) i geometryczne (LG) o długosci wiekszej niz 2. Funkcja powinna
 #zwrócic wartosc 1 gdy LA > LG, wartosc -1 gdy LA < LG oraz 0 gdy LA = LG.
+    N = len(t)
+    LG = 2
+    LA = 2
+    for i in range(1,N):
+        cg = 2
+        ca = 2
+        q = Sh(DivFract(t[i],t[i-1]))
+        r = SubtrFract(t[i],t[i-1])
+        print(r)
 
+        j = i
+        while j+1 < N and Sh(MultFract(t[j],q))==Sh(t[j+1]):
+            PrintFract(t[j])
+            PrintFract(t[j+1])
+            cg += 1
+            j += 1
+        if cg > LG:
+            LG = cg
+
+        j = i
+        while j+1 < N and Sh(AddFract(t[j],r))==Sh(t[j+1]): #sprawdzanie LA
+            ca += 1
+            j += 1
+        if ca > LA:
+            LA = ca
+    if LA == LG:
+        print(LA)
+        return 0
+    elif LA > LG:
+        print(LA,LG)
+        return 1
+    else:
+        print(LG,LA)
+        return -1
+    
+def ex5(t):
+#Zadanie 5. Dany jest zbiór punktów lezacych na płaszczyznie opisany przy pomocy struktury dane =
+#[(x1, y1), (x2, y2), (x3, y3), ...(xN, yN)] Prosze napisac funkcje, która zwraca wartosc True jezeli zbiorze istnieja
+#4 punkty wyznaczajace kwadrat o bokach równoległych do osi układu współrzednych, a wewnatrz
+#tego kwadratu nie ma zadnych innych punktów. Do funkcji nalezy przekazac strukture opisujaca połozenie
+#punktów.
+    N = len(t)
+    s = 0
+    while N-s >= 4:
+        for i in range(s,N):
+            points = 0
+            a = t[i][0]
+            b = t[i][1]
+            cnt = 1
+            if a == b:
+                continue
+            for j in range(N):
+                if t[j] == (b,a):
+                    cnt += 1
+                    for k in range(N):
+                        if t[k] == (a,a):
+                            cnt += 1
+                            for l in range(N):
+                                if t[l] == (b,b):
+                                    cnt += 1
+            if cnt == 4:
+                if a > b:
+                    sup = a
+                    inf = b
+                else:
+                    sup = b
+                    inf = a
+                for h in range(N):
+                    if t[h][0] > t[h][1]:
+                        s1 = t[h][0]
+                        i1 = t[h][1]
+                    else:
+                        s1 = t[h][1]
+                        i1 = t[h][0]
+                    if s1 <= sup and i1 >= inf:
+                        points += 1
+                if points == 4:
+                    return True
+                    
+        s += 1
+    return False
 
 def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 
 if __name__ == "__main__":
-    N = 5
-    t = [0]*N
-    print("Podaj pola N hetmanów należące do [0,99]") #w kolejności row column
-    for i in range(N):
-        t[i] = ReadFract()
-    print(ex3(t))
+    t = [(1,1),(5,1),(1,5),(5,5),(10,1)]
+    print(ex5(t))
