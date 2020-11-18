@@ -79,12 +79,82 @@ def ex2(t):
                     if IfPrime(a) == True and IfPrime(b) == True and IfPrime(c) == True and IfPrime(d) == True:              
                         print(t[r1][c1],"|",t[r1+1][c1],"&",t[r2][c2],"|",t[r2][c2+1],sep="")
 
+#def ex3(t1,t2):
+#Zad. 1. Dane są dwie tablice int t1[N], int t2[N] wypełnione liczbami naturalnymi. Proszę napisać funkcję, która
+#sprawdza czy z każdej z tablic można wyciąć po jednym kawałku, tak aby suma elementów w obu kawałkach była:
+#co najmniej drugą potęgą dowolnej liczby naturalnej. Łączna długości obu kawałków powinna wynosić 24.
+#    N = len(t1)
+
+def ToBinary(n):#zamienia liczbę na binarną 
+    l =[]
+    while n // 2 != 0:
+        l.append(n%2)
+        n //=2
+    l.append(n%2)
+    l = l[::-1]
+    return l
+
+def Count1(n):
+    cnt = 0
+    while n != 0:
+        if n % 10 == 1:
+            cnt += 1
+        n //= 10
+    return cnt
+
+def TwoDimCopy(t): #copy of 2 dimentional list/array idk
+    l = len(t)
+    new_tab = [[0]*l]*l
+    i,j = 0,0
+    for row in t:
+        for column in row:
+            new_tab[i][j] = column
+            j+=1
+        i+=1
+    return new_tab
+
+def ex4(t):
+#Zad. 2. Dana jest tablica int t[N][N] zawierająca liczby naturalne. Proszę napisać funkcję, która sprawdza czy z tablicy
+#można usunąć jeden wiersz i dwie kolumny, tak aby każdy z pozostałych elementów tablicy w zapisie dwójkowym
+#posiadał nieparzystą liczbę jedynek.
+    N = len(t)
+    tab = [0]*N
+    for i in range(N):
+        tab[i] = [0]*N
+
+    empty = TwoDimCopy(tab)
+    
+    for r in range(N):
+        for c in range(N):
+            if Count1(ToBinary(t[r][c])) % 2 == 0:
+                tab[r][c] = 1
+    
+    for r in range(N):
+        tmp1_tab = TwoDimCopy(tab)
+        del tmp_tab[r]
+        for c in range(N):
+            tmp2_tab = TwoDimCopy(tmp1_tab)
+            for i in range(N):
+                del tmp2_tab[i,c]
+        if tmp2_tab == empty:
+            return True
+            
+    return False 
+    
+    
+    
+
 def Print2DmTab(t):
     for i in range(len(t)):
         print(t[i])
 
+def GenRndTab(length,start,end): #generuje tablicę jednowymiarową
+    from random import randint
+    tab = []
+    for i in range(length):
+        tab.append(randint(start,end))
+    return tab
 if __name__ == "__main__":
     N = 5
-    t = GenRnd2DmArr(N,1,100)
-    Print2DmTab(t)
+    
     ex2(t)
