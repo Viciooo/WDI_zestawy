@@ -157,3 +157,12 @@ def Otoczka(t): # 0 dookola 2 dim array
         n.append(0,0)
     t.insert(0,[0]*(n+2))
     t.append([0]*(n+2))
+
+def ToBinary(n):#zamienia liczbę na binarną 
+    l =[]
+    while n // 2 != 0:
+        l.append(n%2)
+        n //=2
+    l.append(n%2)
+    l = l[::-1]
+    return l
