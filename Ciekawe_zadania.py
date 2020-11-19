@@ -92,7 +92,10 @@ def ToBinary(n):#zamienia liczbę na binarną
         n //=2
     l.append(n%2)
     l = l[::-1]
-    return l
+    tmp = ''
+    for i in range(len(l)):
+        tmp += str(l[i])
+    return int(tmp)
 
 def Count1(n):
     cnt = 0
@@ -103,15 +106,14 @@ def Count1(n):
     return cnt
 
 def TwoDimCopy(t): #copy of 2 dimentional list/array idk
-    l = len(t)
-    new_tab = [[0]*l]*l
-    i,j = 0,0
-    for row in t:
-        for column in row:
-            new_tab[i][j] = column
-            j+=1
-        i+=1
-    return new_tab
+    N = len(t)
+    tab = [0]*N
+    for i in range(N):
+        tab[i] = [0]*N
+    for r in range(N):
+        for c in range(N):
+            tab[r][c] = t[r][c]
+    return tab
 
 def ex4(t):
 #Zad. 2. Dana jest tablica int t[N][N] zawierająca liczby naturalne. Proszę napisać funkcję, która sprawdza czy z tablicy
@@ -121,28 +123,32 @@ def ex4(t):
     tab = [0]*N
     for i in range(N):
         tab[i] = [0]*N
-
-    empty = TwoDimCopy(tab)
     
     for r in range(N):
         for c in range(N):
             if Count1(ToBinary(t[r][c])) % 2 == 0:
                 tab[r][c] = 1
     
-    for r in range(N):
-        tmp1_tab = TwoDimCopy(tab)
-        del tmp_tab[r]
-        for c in range(N):
-            tmp2_tab = TwoDimCopy(tmp1_tab)
-            for i in range(N):
-                del tmp2_tab[i,c]
-        if tmp2_tab == empty:
+    for x in range(N):
+        for y in range(N):
+            for z in range(y+1,N):
+                flag = True
+                print("x",x,"y",y,"z",z)
+                for r in range(N):
+                    if r == x:
+                        continue
+                    for c in range(N):
+                        if c == z or c == y:
+                            continue
+                        Print2DmTab(tab)
+                        if tab[r][c] == 1:
+                            flag = False
+                            break
+        if flag == True:
             return True
-            
-    return False 
-    
-    
-    
+    return False
+
+
 
 def Print2DmTab(t):
     for i in range(len(t)):
@@ -151,10 +157,11 @@ def Print2DmTab(t):
 def GenRndTab(length,start,end): #generuje tablicę jednowymiarową
     from random import randint
     tab = []
-    for i in range(length):
+    for _ in range(length):
         tab.append(randint(start,end))
     return tab
-if __name__ == "__main__":
-    N = 5
     
-    ex2(t)
+if __name__ == "__main__":
+    N = 3
+    t = [[3,3,3],[2,1,3],[1,3,1]]
+    print(ex4(t))
