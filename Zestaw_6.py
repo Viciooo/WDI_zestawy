@@ -220,19 +220,41 @@ def det(matrix):
     return sum_
 
 #Zadanie 11. Dana jest tablica T[N]. Prosze napisac program zliczajacy liczbe “enek” o okreslonym iloczynie.
-def ex11(il,T,nki,i=0,res=[]):
-    print(res)
-    if i == len(T)-1 or nki == 0:
-        if il == 1:
-            print(res)
+cnt = 0
+def ex11(il,T,nki,i=0):
+    global cnt
+    if i == len(T) or nki == 0:
+        if il == 1 and nki == 0:
+            cnt += 1
             return True
         else:
             return False
     if il % T[i] == 0:
-        return ex11(il//T[i],T,nki-1,i+1,res+[T[i]])|ex11(il,T,nki,i+1,res)
+        return ex11(il//T[i],T,nki-1,i+1)|ex11(il,T,nki,i+1)
     else:
-        return ex11(il,T,nki,i+1,res)
+        return ex11(il,T,nki,i+1)
+    
+#Zadanie 12. Prosze zmodyfikowac poprzedni program aby wypisywał znalezione n-ki.
+repo=[]
+def ex12(il,T,nki,i=0,res=[]):
+    global repo
+    if i == len(T) or nki == 0:
+        if il == 1 and nki == 0:
+            repo.append(res)
+            return True
+        else:
+            return False
+    if il % T[i] == 0:
+        return ex12(il//T[i],T,nki-1,i+1,res+[T[i]])|ex12(il,T,nki,i+1,res)
+    else:
+        return ex12(il,T,nki,i+1,res)
+
+#Zadanie 13. Napisac program wypisujacy wszystkie mozliwe podziały liczby naturalnej na sume składników.
+#Na przykład dla liczby 4 sa to: 1+3, 1+1+2, 1+1+1+1, 2+2.
+
+#Zadanie 14. Problem wiez w Hanoi (tresc oczywista)
+
+#Zadanie 15. Problem 8 Hetmanów (tresc oczywista)
 
 if __name__ == "__main__": 
-    print(ex4(6))
-
+    
