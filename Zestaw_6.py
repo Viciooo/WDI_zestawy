@@ -313,13 +313,54 @@ def wyraz(s1,s2,i=1):
         return False
     else:
         return wyraz(s1,s2[:i-1]+s2[i:],i+1)|wyraz(s1,s2,i+1)
-        
+
+#Zadanie 17. Dane sa dwie liczby naturalne z których budujemy trzecia liczbe. W budowanej liczbie musza
+#wystapic wszystkie cyfry wystepujace w liczbach wejsciowych. Wzajemna kolejnosc cyfr kazdej z liczb
+#wejsciowych musi byc zachowana. Na przykład majac liczby 123 i 75 mozemy zbudowac liczby 12375, 17523,
+#75123, 17253, itd. Prosze napisac funkcje która wyznaczy ile liczb pierwszych mozna zbudowac z dwóch
+#zadanych liczb.
+
+def getlen(n):
+    c = 0
+    while n != 0:
+        n //= 10
+        c +=1 
+    return c
+
+l1 = 0
+l2 = 0
+cnt = 0
+
+def ex17(n1,n2,i=0,j=0,n3=0):
+    global cnt,l1,l2
+    if n1 == n2 == 0:
+        if IfPrime(int(str(n3)[::-1])) == True:
+            print(n3)
+            cnt += 1
+        return False
+    if i > l1 or j > l2:
+        return False
+    if n1 != 0 or n2 !=0:
+        return ex17(n1//10**(i+1),n2,i+1,j,n3+(n1%10**(i+1))*10**(i+j))|ex17(n1,n2//10**(j+1),i,j+1,n3+(n2%10**(j+1)*10**(j+i)))
+
+def start17(n1,n2):
+    global l1, l2
+    l1 += getlen(n1)
+    l2 += getlen(n2)
+    ex17(n1,n2)
+    
+#Zadanie 18. W szachownicy o wymiarach 8x8 kazdemu z pól przypisano liczbe naturalna. Na ruchy króla
+#nałozono dwa ograniczenia: król moze przesunac sie na jedno z 8 sasiednich pól jezeli ostatnia cyfra liczby na
+#polu na którym stoi jest mniejsza od pierwszej cyfry liczby pola docelowego, oraz w drodze do obranego celu
+#(np. naroznika) król nie moze wykonac ruchu, który powoduje oddalenie go od celu. Dana jest globalna tablica
+#T[8][8] wypełniona liczbami naturalnymi reprezentujaca szachownice. Lewy górny naroznik ma współrzedne
+#w=0 i k=0. Prosze napisac funkcje sprawdzajaca czy król moze dostac sie z pola w,k do prawego dolnego
+#naroznika.
+
+
 if __name__ == "__main__":
-    cnt =0
-    A = [1,2,3,4]
-    B=[]
-    C=[]
-    hanoi(4,A,B,C)
+    cnt = 0
+    start17(1,7)
     print(cnt)
 
 
