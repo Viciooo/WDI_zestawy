@@ -251,10 +251,78 @@ def ex12(il,T,nki,i=0,res=[]):
 
 #Zadanie 13. Napisac program wypisujacy wszystkie mozliwe podziały liczby naturalnej na sume składników.
 #Na przykład dla liczby 4 sa to: 1+3, 1+1+2, 1+1+1+1, 2+2.
+def wypisz(tab):
+    for x in tab:
+        if x != 0:
+            print(x,end=" ")
+        else:
+            break
+    print()
+
+def ex13(t,i=0):
+    if i <= len(t):
+        while t[i] != 1 and t[i]>t[i+1]:
+            t[i] -= 1
+            t[i+1] += 1
+            if t[i+1] <= t[i]:
+                wypisz(t)
+            ex13(t,i+1)
+
+
+def start13(n):
+    t = [0 for _ in range(n)]
+    t[0] = n
+    ex13(t)
+
+
 
 #Zadanie 14. Problem wiez w Hanoi (tresc oczywista)
+def hanoi(n,source,target,spare):
+    global cnt
+    if n > 0:
+        cnt+=1
+        hanoi(n-1,source,spare,target)
+        target.append(source.pop())
+        hanoi(n-1,spare,target,source)
 
 #Zadanie 15. Problem 8 Hetmanów (tresc oczywista)
 
-if __name__ == "__main__": 
-    
+
+#Zadanie 16. Wyrazy budowane sa z liter a..z. Dwa wyrazy ”waza” tyle samo jezeli: maja te sama liczbe samogłosek
+#oraz sumy kodów ascii liter z których sa zbudowane sa identyczne, na przykład "ula" -> 117, 108, 97
+#oraz "exe" -> 101, 120, 101. Prosze napisac funkcje wyraz(s1,s2), która sprawdza czy jest mozliwe zbudowanie
+#wyrazu z podzbioru liter zawartych w s2 wazacego tyle co wyraz s1. Dodatkowo funkcja powinna wypisac
+#naleziony wyraz.
+def weight(s):
+    samogl = ['a','i','o','u','e','y']
+    cnt = 0
+    suma = 0
+    for i in s:
+        for j in samogl:
+            if i == j:
+                cnt += 1
+                break
+        suma += ord(i)
+    return cnt,suma
+
+def wyraz(s1,s2,i=1):
+    if weight(s1)==weight(s2):
+        print(s2)
+        return True
+    elif i == len(s1):
+        return False
+    else:
+        return wyraz(s1,s2[:i-1]+s2[i:],i+1)|wyraz(s1,s2,i+1)
+        
+if __name__ == "__main__":
+    cnt =0
+    A = [1,2,3,4]
+    B=[]
+    C=[]
+    hanoi(4,A,B,C)
+    print(cnt)
+
+
+
+
+
