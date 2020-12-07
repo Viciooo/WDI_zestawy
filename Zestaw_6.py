@@ -357,12 +357,68 @@ def start17(n1,n2):
 #w=0 i k=0. Prosze napisac funkcje sprawdzajaca czy król moze dostac sie z pola w,k do prawego dolnego
 #naroznika.
 
+def CanMove18(w,k,i):
+    global m,T
+    N = len(T)
+    r = w+i[0]
+    c = k+i[1]
+    if r >= N or r < 0 or c >= N or c < 0:
+        return False
+    tmp = T[r][c]
+    while tmp // 10 != 0:
+        tmp //= 10
+    if (T[w][k]%10) < tmp and max(7-k,7-w) >= max(7-c,7-r):
+        return True
+
+def KingMarch18(w=0,k=0):
+    global T,m
+    if w == k == len(T)-1:
+        return "Marszruta udana"
+    for i in m:
+        if CanMove18(w,k,i) == True:
+            x = KingMarch18(w+i[0],k+i[1])
+            if x == "Marszruta udana":
+                return "Marszruta udana"
+    return "Koniec marszruty"
+
+#Zadanie 19. Zadanie jak powyzej. Funkcja sprawdzajaca czy król moze dostac sie z pola w,k do któregokolwiek
+#z narozników. #Zadanie 20. Zadanie jak powyzej. Funkcja powinna dostarczyc droge króla w postaci tablicy zawierajacej
+#kierunki (liczby od 0 do 7) poszczególnych ruchów króla do wybranego celu.
+#2 zadania w 1
+def CanMove19(w,k,i,R,C):
+    global m,T
+    N = len(T)
+    r = w+i[0]
+    c = k+i[1]
+    if r >= N or r < 0 or c >= N or c < 0:
+        return False
+    tmp = T[r][c]
+    while tmp // 10 != 0:
+        tmp //= 10
+    if (T[w][k]%10) < tmp and max(abs(C-k),abs(R-w)) >= max(abs(C-c),abs(R-r)):
+        return True
+
+def KingMarch19(w,k,R,C,res=[]):
+    global T,m
+    if w == k == len(T)-1:
+        print(res)
+        return True
+    for i in m:
+        if CanMove19(w,k,i,R,C) == True:
+            x = KingMarch19(w+i[0],k+i[1],R,C,res+[i])
+            if x == True:
+                return True
+    return False
+
+#Zadanie 21. Tablica T[8][8] zawiera liczby naturalne. Prosze napisac funkcje, która sprawdza czy mozna
+#wybrac z tablicy niepusty podzbiór o zadanej sumie. Warunkiem dodatkowym jest aby zadne dwa wybrane
+#elementy nie lezały w tej samej kolumnie ani wierszu. Do funkcji nalezy przekazac wyłacznie tablice oraz
+#wartosc sumy, funkcja powinna zwrócic wartosc typu bool.
 
 if __name__ == "__main__":
-    cnt = 0
-    start17(1,7)
-    print(cnt)
-
+    T = [[91 for _ in range(8)] for _ in range(8)]
+    m = [(1,1),(0,1),(1,0),(1,-1),(0,-1),(-1,0),(-1,-1),(-1,1)] #moves
+    print(KingMarch19(0,0,5,4))
 
 
 
