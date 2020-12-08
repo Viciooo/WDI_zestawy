@@ -410,15 +410,35 @@ def KingMarch19(w,k,R,C,res=[]):
                 return True
     return False
 
+#T = [[91 for _ in range(8)] for _ in range(8)]
+#m = [(1,1),(0,1),(1,0),(1,-1),(0,-1),(-1,0),(-1,-1),(-1,1)] #moves
+#print(KingMarch19(0,0,5,4))
+
 #Zadanie 21. Tablica T[8][8] zawiera liczby naturalne. Prosze napisac funkcje, która sprawdza czy mozna
 #wybrac z tablicy niepusty podzbiór o zadanej sumie. Warunkiem dodatkowym jest aby zadne dwa wybrane
 #elementy nie lezały w tej samej kolumnie ani wierszu. Do funkcji nalezy przekazac wyłacznie tablice oraz
 #wartosc sumy, funkcja powinna zwrócic wartosc typu bool.
+def canMove(banned,i,N):
+    for j in banned:
+        if j%N == i%N or j//N == i//N:
+            return False
+    return True
+
+def ex21(T,szukana,suma=0,i=0,banned=[]):
+    if szukana == suma:
+        return True
+    if i >= len(T)**2:
+        return False
+    if canMove(banned,i,len(T)) == True:
+        print(suma)
+        return ex21(T,szukana,suma+T[i//4][i%4],i+4-i%4,banned+[i]) or ex21(T,szukana,suma,i+1,banned)
+    else:
+        return ex21(T,szukana,suma,i+1,banned)
+    
+    
+
 
 if __name__ == "__main__":
-    T = [[91 for _ in range(8)] for _ in range(8)]
-    m = [(1,1),(0,1),(1,0),(1,-1),(0,-1),(-1,0),(-1,-1),(-1,1)] #moves
-    print(KingMarch19(0,0,5,4))
 
 
 
