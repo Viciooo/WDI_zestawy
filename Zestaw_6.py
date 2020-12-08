@@ -471,10 +471,53 @@ def start22(T):
     else:
         return tmp
 
+#Zadanie 23. Dana jest tablica T[N] zawierajaca opornosci N rezystorów wyrazonych całkowita liczba
+#k(Omega). Prosze napisac funkcje, która sprawdza czy jest mozliwe uzyskanie wypadkowej rezystancji R (równej
+#całkowitej liczbie k(oMEGA) łaczac dowolnie 3 wybrane rezystory.
+
+#!Nie umiem fizyki sorry - dr Gajęcki nie daj fizyki na kolosie plis
+
+#Zadanie 24. Tablica T = [(x1, y1), (x1, y1), ...] zawiera połozenia N punktów o współrzednych opisanych
+#wartosciami typu float. Prosze napisac funkcje, która zwróci najmniejsza odległosc miedzy srodkami ciezkosci
+#2 niepustych podzbiorów tego zbioru.
+
+#//Zadanie 25. - to to samo co 22
+
+#Zadanie 26. Do budowy liczby naturalnej reprezentowanej w systemie dwójkowym mozemy uzyc A cyfr
+#1 oraz B cyfr 0, gdzie A,B > 0. Prosze napisac funkcje, która dla zadanych parametrów A i B zwraca ilosc
+#wszystkich mozliwych do zbudowania liczb, takich ze pierwsza cyfra w systemie dwójkowym (najstarszy
+#bit) jest równa 1, a zbudowana liczba jest złozona. Na przykład dla A=2, B=3 ilosc liczb wynosi 3, sa to
+#10010(2), 10100(2), 11000(2)
+def tabToDecConv(tab):
+    suma = 0
+    n = len(tab)
+    for i in range(n):
+        suma += tab[i]*(2**(n-i-1))
+    return IfPrime(suma)
+
+def ex26(A,B,tab=[1]):
+    global cnt
+    if A == B == 0:
+        if tabToDecConv(tab) == False:
+            cnt += 1
+        return cnt
+    if A != 0 and B != 0:
+        return ex26(A-1,B,tab+[1])|ex26(A,B-1,tab+[0])
+    elif A !=0:
+        return ex26(A-1,B,tab+[1])
+    elif B !=0:
+        return ex26(A,B-1,tab+[0])
+
+def start26(A,B):
+    cnt = 0
+    return ex26(A-1,B)
+
+#Zadanie 27. Kwadrat jest opisywany czwórka liczb całkowitych (x1, x2, y1, y2), gdzie x1, x2, y1, y2 oznaczaja
+#proste ograniczajace kwadrat x1 < x2, y1 < y2. Dana jest tablica T zawierajaca opisy N kwadratów. Prosze
+#napisac funkcje, która zwraca wartosc logiczna True, jesli danej tablicy mozna znalezc 13 nienachodzacych
+#na siebie kwadratów, których suma pól jest równa 2012 i False w przeciwnym przypadku.
 
 if __name__ == "__main__":
-    T = [12,1,6,2,1,4,1,1]
-    print(start22(T))
 
 
 
