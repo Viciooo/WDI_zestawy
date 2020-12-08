@@ -418,7 +418,7 @@ def KingMarch19(w,k,R,C,res=[]):
 #wybrac z tablicy niepusty podzbiór o zadanej sumie. Warunkiem dodatkowym jest aby zadne dwa wybrane
 #elementy nie lezały w tej samej kolumnie ani wierszu. Do funkcji nalezy przekazac wyłacznie tablice oraz
 #wartosc sumy, funkcja powinna zwrócic wartosc typu bool.
-def canMove(banned,i,N):
+def canMove21(banned,i,N):
     for j in banned:
         if j%N == i%N or j//N == i//N:
             return False
@@ -429,17 +429,52 @@ def ex21(T,szukana,suma=0,i=0,banned=[]):
         return True
     if i >= len(T)**2:
         return False
-    if canMove(banned,i,len(T)) == True:
+    if canMove21(banned,i,len(T)) == True:
         print(suma)
         return ex21(T,szukana,suma+T[i//4][i%4],i+4-i%4,banned+[i]) or ex21(T,szukana,suma,i+1,banned)
     else:
         return ex21(T,szukana,suma,i+1,banned)
     
-    
+#Zadanie 22. Dana jest tablica T[N] zawierajaca liczby naturalne. Po tablicy mozemy przemieszczac sie
+#według nastepujacej zasady: z pola o indeksie i mozemy przeskoczyc na pole o indeksie i+k jezeli k jest
+#czynnikiem pierwszym liczby t[i] mniejszym od t[i]. Prosze napisac funkcje, która zwraca informacje czy jest
+#mozliwe przejscie z pola o indeksie 0 na pole o indeksie N-1. Funkcja powinna zwrócic liczbe wykonanych
+#skoków lub wartosc -1 jezeli powyzsze przejscie nie jest mozliwe.
+
+def PrimeDivList(n): #zwraca listę podzielników pierwszych w postaci tablicy
+    l = []
+    for i in range(2,n+1):
+        if n % i == 0:
+            l.append(i)
+        while n % i == 0:
+            n //= i
+    return l
+
+def ex22(T,i=0,cnt=0):
+    if i == len(T)-1:
+        return cnt
+    if i >= len(T):
+        return False
+    if i != 1:
+        tmp = PrimeDivList(T[i])
+        for k in tmp:
+            if k < T[i]:
+                x = ex22(T,i+k,cnt+1)
+                if x != False:
+                    return x
+        return False
+
+def start22(T):
+    tmp = ex22(T)
+    if tmp == False:
+        return -1
+    else:
+        return tmp
 
 
 if __name__ == "__main__":
-
+    T = [12,1,6,2,1,4,1,1]
+    print(start22(T))
 
 
 
