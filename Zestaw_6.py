@@ -517,7 +517,60 @@ def start26(A,B):
 #napisac funkcje, która zwraca wartosc logiczna True, jesli danej tablicy mozna znalezc 13 nienachodzacych
 #na siebie kwadratów, których suma pól jest równa 2012 i False w przeciwnym przypadku.
 
+def Check(tab):
+    for el in tab:
+        cnt = 0
+        suma = abs((el[0]-el[1])*(el[2]-el[3]))
+        for i in tab:
+            suma += abs((i[0]-i[1])*(i[2]-i[3]))
+            if el[0] > i[0] and el[1] < i[1] and el[2] > i[2] and el[3] < i[3]:
+                continue
+            if el[0] < i[0] and el[1] > i[1] and el[2] < i[2] and el[3] > i[3]:
+                continue
+            cnt += 1
+            if cnt == 2:
+                return False
+        if suma - abs((el[0]-el[1])*(el[2]-el[3])) == 2012:
+            return True
+    return False
+
+def ex27(T,i=0,tab=[]):
+    if len(tab) == 13:
+        return Check(tab)
+    elif i == len(T):
+        return False
+    return ex27(T,i+1,tab +[T[i]])|ex27(T,i+1,tab)
+
+#Zadanie 28. Dany jest zbiór N liczb naturalnych umieszczony w tablicy T[N]. Prosze napisac funkcje,
+#która zwraca informacje, czy jest mozliwy podział zbioru N liczb na trzy podzbiory, tak aby w kazdym
+#podzbiorze, łaczna liczba jedynek uzyta do zapisu elementów tego podzbioru w systemie dwójkowym była
+#jednakowa. Na przykład: [2, 3, 5, 7, 15] -> true, bo podzbiory {2,7} {3,5} {15} wymagaja uzycia 4 jedynek,
+#[5, 7, 15] ! false, podział nie istnieje.
+
+def Count1(n):
+    cnt = 0
+    while n != 0:
+        if n % 2 == 1:
+            cnt += 1
+        n //= 2
+    return cnt
+
+def ex28(T,c1=0,c2=0,c3=0,i=0):
+    if i == len(T):
+        if c1 == c2 == c3:
+            return True
+        return False
+    return ex28(T,c1+Count1(T[i]),c2,c3,i+1)|ex28(T,c1,c2+Count1(T[i]),c3,i+1)|ex28(T,c1,c2,c3+Count1(T[i]),i+1)
+
+#Zadanie 29. Punkt lezacy w przestrzeni jest opisywany trójka liczb typu float (x,y,z). Tablica T[N] zawiera
+#współrzedne N punktów lezacych w przestrzeni. Punkty posiadaja jednostkowa mase. Prosze napisac funkcje,
+#która sprawdza czy istnieje podzbiór punktów liczacy co najmniej 3 punkty, którego srodek ciezkosci lezy w
+#odległosci nie wiekszej niz r od poczatku układu współrzednych. Do funkcji nalezy przekazac tablice T oraz
+#promien r, funkcja powinna zwrócic wartosc typu bool.
+
 if __name__ == "__main__":
+    t = [5, 7, 15]
+    print(ex28(t))
 
 
 
