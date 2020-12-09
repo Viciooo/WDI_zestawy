@@ -268,13 +268,10 @@ def ex13(t,i=0):
                 wypisz(t)
             ex13(t,i+1)
 
-
 def start13(n):
     t = [0 for _ in range(n)]
     t[0] = n
     ex13(t)
-
-
 
 #Zadanie 14. Problem wiez w Hanoi (tresc oczywista)
 def hanoi(n,source,target,spare):
@@ -371,7 +368,7 @@ def CanMove18(w,k,i):
         return True
 
 def KingMarch18(w=0,k=0):
-    global T,m
+    global T,m #m == moves
     if w == k == len(T)-1:
         return "Marszruta udana"
     for i in m:
@@ -473,9 +470,54 @@ def start22(T):
 
 #Zadanie 23. Dana jest tablica T[N] zawierajaca opornosci N rezystorów wyrazonych całkowita liczba
 #k(Omega). Prosze napisac funkcje, która sprawdza czy jest mozliwe uzyskanie wypadkowej rezystancji R (równej
-#całkowitej liczbie k(oMEGA) łaczac dowolnie 3 wybrane rezystory.
+#całkowitej liczbie k(oMEGA) łaczac dowolnie 3 wybrane rezystory. 
+def AddFract(t1,t2):
+    if t1 == (0,0):
+        return t2
+    if t2 == (0,0):
+        return t1
+    if t1[1] == t2[1]:
+        wynik = (t1[0]+t2[0],t1[1])
+        return wynik
+    else:
+        wynik = (t1[0]*t2[1]+t2[0]*t1[1],t1[1]*t2[1])
+        return wynik
 
-#!Nie umiem fizyki sorry - dr Gajęcki nie daj fizyki na kolosie plis
+def Sh(t1): #shorten fract
+    lw, mw = t1
+    i = 2
+    while i <= abs(lw):
+        if lw % i == 0 and mw % i == 0:
+            lw //= i
+            mw //= i
+        else:
+            i += 1
+    wynik = (lw,mw)
+    return wynik
+
+def CzyMozna(tab,k,i=0,szer=[],rown=[]):
+    if len(szer)+len(rown) == 3:
+        x = k
+        for n in szer:
+            x -= n
+        tmp = (0,0)
+        for j in rown:
+            tmp = AddFract(tmp,(1,j))
+        tmp = Sh(tmp)
+        if tmp == (x,1):
+            return True
+    if i == len(tab):
+        return False
+    return CzyMozna(tab,k,i+1,szer,rown+[tab[i]]) or CzyMozna(tab,k,i+1,szer+[tab[i]],rown) or CzyMozna(tab,k,i+1,szer,rown)
+
+def ex23(T,k,i=0,tab=[]):
+    if len(tab) >= 3:
+        if CzyMozna(tab,k):
+            return True
+    if i == len(T):
+        return False
+    return ex23(T,k,i+1,tab+[T[i]]) or ex23(T,k,i+1,tab)
+
 
 #Zadanie 24. Tablica T = [(x1, y1), (x1, y1), ...] zawiera połozenia N punktów o współrzednych opisanych
 #wartosciami typu float. Prosze napisac funkcje, która zwróci najmniejsza odległosc miedzy srodkami ciezkosci
@@ -539,7 +581,7 @@ def ex27(T,i=0,tab=[]):
         return Check(tab)
     elif i == len(T):
         return False
-    return ex27(T,i+1,tab +[T[i]])|ex27(T,i+1,tab)
+    return ex27(T,i+1,tab+[T[i]])|ex27(T,i+1,tab)
 
 #Zadanie 28. Dany jest zbiór N liczb naturalnych umieszczony w tablicy T[N]. Prosze napisac funkcje,
 #która zwraca informacje, czy jest mozliwy podział zbioru N liczb na trzy podzbiory, tak aby w kazdym
@@ -569,8 +611,5 @@ def ex28(T,c1=0,c2=0,c3=0,i=0):
 #promien r, funkcja powinna zwrócic wartosc typu bool.
 
 if __name__ == "__main__":
-    t = [5, 7, 15]
-    print(ex28(t))
-
-
-
+    T = [3,3,3,1]
+    print(ex23(T,2))
