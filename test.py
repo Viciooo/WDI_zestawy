@@ -1,23 +1,37 @@
-#Zadanie 21. Tablica T[8][8] zawiera liczby naturalne. Prosze napisac funkcje, która sprawdza czy mozna
-#wybrac z tablicy niepusty podzbiór o zadanej sumie. Warunkiem dodatkowym jest aby zadne dwa wybrane
-#elementy nie lezały w tej samej kolumnie ani wierszu. Do funkcji nalezy przekazac wyłacznie tablice oraz
-#wartosc sumy, funkcja powinna zwrócic wartosc typu bool.
 
-def Check(tab,n):
-    for i in tab:
-        if i == n:
-            return False
-    return True
+#Zadanie 24. Tablica T = [(x1, y1), (x1, y1), ...] zawiera połozenia N punktów o współrzednych opisanych
+#wartosciami typu float. Prosze napisac funkcje, która zwróci najmniejsza odległosc miedzy srodkami ciezkosci
+#2 niepustych podzbiorów tego zbioru.
+def massMiddle(t):
+    x, y = 0, 0
+    for i in t:
+        x += i[0]
+        y += i[1]
+    x /= len(t)
+    y /= len(t)
+    return x,y
 
-def func(T,szukana,i=0,tw=[],tk=[]):
-    if len(tw) > 0 and szukana == 0:
-        return True
-    if i == len(T)**2 or szukana < 0:
+def odl(t1,t2):
+    m1 = massMiddle(t1)
+    m2 = massMiddle(t2)
+    r = ((m1[0]-m2[0])**2 + (m1[1]-m2[1])**2)**(1/2)
+    return r
+
+def ex24(T,t1=[],t2=[],i=0):
+    global x
+    if len(t1) > 0 and len(t2) > 0:
+        tmp = odl(t1,t2)
+        if tmp < x:
+            x = tmp
+    if i == len(T):
         return False
-    if Check(tw,i%4) ==True and Check(tk,i//4) == True:
-        return func(T,szukana-T[i%4][i//4],i+4-i//4,tw+[i%4],tk+[i//4]) or func(T,szukana,i+1,tw,tk)
-    else:
-        return func(T,szukana,i+1,tw,tk)
+    return ex24(T,t1+[T[i]],t2,i+1) | ex24(T,t1,t2+[T[i]],i+1) | ex24(T,t1,t2,i+1)
 
-T = [[1,3,7,2],[1,3,7,2],[1,3,7,2],[1,3,7,2]]
-print(func(T,4))
+def start24(T):
+    global x
+    x = 1000
+    ex24(T)
+    return x
+
+t = [(1,4),(1,2)]
+print(start24(t))
