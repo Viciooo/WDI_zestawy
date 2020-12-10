@@ -610,7 +610,28 @@ def ex28(T,c1=0,c2=0,c3=0,i=0):
 #odległosci nie wiekszej niz r od poczatku układu współrzednych. Do funkcji nalezy przekazac tablice T oraz
 #promien r, funkcja powinna zwrócic wartosc typu bool.
 
-#!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa nie wiem co siędzxieje
+def Check(tab,r):
+    x, y, z = 0, 0, 0
+    for i in tab:
+        x += i[0]
+        y += i[1]
+        z += i[2]
+    x /= len(tab)
+    y /= len(tab)
+    z /= len(tab)
+    odleg = (x**2 + y**2 + z**2)**(1/2)
+    print(odleg)
+    if odleg <= r:
+        return True
+    return False
+
+def Group(T,r,i=0,tab=[]):
+    print(tab)
+    if len(tab) >= 3:
+        return Check(tab,r)
+    if i == len(T):
+        return False
+    return Group(T,r,i+1,tab+[T[i]]) or Group(T,r,i+1,tab)
 
 #Zadanie 30. Punkt lezacy na płaszczyznie jest opisywany para liczb typu float (x,y). Tablica T[N] zawiera
 #współrzedne N punktów lezacych na płaszczyznie. Punkty posiadaja jednostkowa mase. Prosze napisac funkcje,
@@ -618,6 +639,8 @@ def ex28(T,c1=0,c2=0,c3=0,i=0):
 #3, którego srodek ciezkosci lezy w odległosci mniejszej niz r od poczatku układu współrzednych. Do funkcji
 #nalezy przekazac dokładnie 3 parametry: tablice t, promien r, oraz ograniczenie k, funkcja powinna zwrócic
 #wartosc typu bool.
+
+
 
 #//Zadanie 31. Prosze napisac funkcje, która jako parametr otrzymuje liczbe naturalna i zwraca sume iloczynów
 #elementów wszystkich niepustych podzbiorów zbioru podzielników pierwszych tej liczby. Mozna załozyc,
