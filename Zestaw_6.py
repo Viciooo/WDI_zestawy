@@ -428,7 +428,7 @@ def ex21(T,szukana,suma=0,i=0,banned=[]):
         return False
     if canMove21(banned,i,len(T)) == True:
         print(suma)
-        return ex21(T,szukana,suma+T[i//8][i%8],i+8-i%8,banned+[i]) or ex21(T,szukana,suma,i+1,banned)
+        return ex21(T,szukana,suma+T[i//4][i%4],i+4-i%4,banned+[i]) or ex21(T,szukana,suma,i+1,banned)
     else:
         return ex21(T,szukana,suma,i+1,banned)
     
@@ -560,18 +560,15 @@ def start26(A,B):
 #na siebie kwadratów, których suma pól jest równa 2012 i False w przeciwnym przypadku.
 
 def Check(tab):
-    for el in tab:
-        cnt = 0
+    for el in range(len(tab)):
         suma = abs((el[0]-el[1])*(el[2]-el[3]))
-        for i in tab:
+        for i in range(el,len(tab)):
             suma += abs((i[0]-i[1])*(i[2]-i[3]))
             if el[0] > i[0] and el[1] < i[1] and el[2] > i[2] and el[3] < i[3]:
                 continue
             if el[0] < i[0] and el[1] > i[1] and el[2] < i[2] and el[3] > i[3]:
                 continue
-            cnt += 1
-            if cnt == 2:
-                return False
+            return False
         if suma - abs((el[0]-el[1])*(el[2]-el[3])) == 2012:
             return True
     return False
@@ -680,3 +677,6 @@ def ex32(T,k,i=0,s1=0,m1=0,s2=0,m2=0):
 
 if __name__ == "__main__":
     print(ex32([1,3,1,2,7,9],6))
+
+
+
