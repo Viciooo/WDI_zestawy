@@ -578,7 +578,7 @@ def ex27(T,i=0,tab=[]):
         return Check(tab)
     elif i == len(T):
         return False
-    return ex27(T,i+1,tab+[T[i]])|ex27(T,i+1,tab)
+    return ex27(T,i+1,tab+[T[i]]) or ex27(T,i+1,tab)
 
 #Zadanie 28. Dany jest zbiór N liczb naturalnych umieszczony w tablicy T[N]. Prosze napisac funkcje,
 #która zwraca informacje, czy jest mozliwy podział zbioru N liczb na trzy podzbiory, tak aby w kazdym
@@ -599,7 +599,7 @@ def ex28(T,c1=0,c2=0,c3=0,i=0):
         if c1 == c2 == c3:
             return True
         return False
-    return ex28(T,c1+Count1(T[i]),c2,c3,i+1)|ex28(T,c1,c2+Count1(T[i]),c3,i+1)|ex28(T,c1,c2,c3+Count1(T[i]),i+1)
+    return ex28(T,c1+Count1(T[i]),c2,c3,i+1) or ex28(T,c1,c2+Count1(T[i]),c3,i+1) or ex28(T,c1,c2,c3+Count1(T[i]),i+1)
 
 #Zadanie 29. Punkt lezacy w przestrzeni jest opisywany trójka liczb typu float (x,y,z). Tablica T[N] zawiera
 #współrzedne N punktów lezacych w przestrzeni. Punkty posiadaja jednostkowa mase. Prosze napisac funkcje,
@@ -632,10 +632,11 @@ def Group(T,r,i=0,tab=[]):
 
 #Zadanie 30. Punkt lezacy na płaszczyznie jest opisywany para liczb typu float (x,y). Tablica T[N] zawiera
 #współrzedne N punktów lezacych na płaszczyznie. Punkty posiadaja jednostkowa mase. Prosze napisac funkcje,
-#która sprawdza czy istnieje niepusty podzbiór n punktów, gdzie n¡k oraz n jest wielokrotnoscia liczby
+#która sprawdza czy istnieje niepusty podzbiór n punktów, gdzie n<=k oraz n jest wielokrotnoscia liczby
 #3, którego srodek ciezkosci lezy w odległosci mniejszej niz r od poczatku układu współrzednych. Do funkcji
 #nalezy przekazac dokładnie 3 parametry: tablice t, promien r, oraz ograniczenie k, funkcja powinna zwrócic
 #wartosc typu bool.
+
 
 
 
