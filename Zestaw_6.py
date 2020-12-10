@@ -282,7 +282,7 @@ def hanoi(n,source,target,spare):
         target.append(source.pop())
         hanoi(n-1,spare,target,source)
 
-#Zadanie 15. Problem 8 Hetmanów (tresc oczywista)
+#Zadanie 15. Problem 8 Hetmanów (tresc oczywista) #!zrobić
 
 
 #Zadanie 16. Wyrazy budowane sa z liter a..z. Dwa wyrazy ”waza” tyle samo jezeli: maja te sama liczbe samogłosek
@@ -497,14 +497,14 @@ def Sh(t1): #shorten fract
 
 def CzyMozna(tab,k,i=0,szer=[],rown=[]):
     if len(szer)+len(rown) == 3:
-        x = k
+        tmp1 = 0
         for n in szer:
-            x -= n
-        tmp = (0,0)
+            tmp1 += n
+        tmp = (1,tmp1)
         for j in rown:
             tmp = AddFract(tmp,(1,j))
         tmp = Sh(tmp)
-        if tmp == (x,1):
+        if tmp == (k,1):
             return True
     if i == len(tab):
         return False
@@ -610,6 +610,50 @@ def ex28(T,c1=0,c2=0,c3=0,i=0):
 #odległosci nie wiekszej niz r od poczatku układu współrzednych. Do funkcji nalezy przekazac tablice T oraz
 #promien r, funkcja powinna zwrócic wartosc typu bool.
 
+#!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa nie wiem co siędzxieje
+
+#Zadanie 30. Punkt lezacy na płaszczyznie jest opisywany para liczb typu float (x,y). Tablica T[N] zawiera
+#współrzedne N punktów lezacych na płaszczyznie. Punkty posiadaja jednostkowa mase. Prosze napisac funkcje,
+#która sprawdza czy istnieje niepusty podzbiór n punktów, gdzie n¡k oraz n jest wielokrotnoscia liczby
+#3, którego srodek ciezkosci lezy w odległosci mniejszej niz r od poczatku układu współrzednych. Do funkcji
+#nalezy przekazac dokładnie 3 parametry: tablice t, promien r, oraz ograniczenie k, funkcja powinna zwrócic
+#wartosc typu bool.
+
+#//Zadanie 31. Prosze napisac funkcje, która jako parametr otrzymuje liczbe naturalna i zwraca sume iloczynów
+#elementów wszystkich niepustych podzbiorów zbioru podzielników pierwszych tej liczby. Mozna załozyc,
+#ze liczba podzielników pierwszych nie przekracza 20, zatem w pierwszym etapie funkcja powinna wpisac podzielniki
+#do tablicy pomocniczej. Przykład: 60 -> [2, 3, 5] -> 2 + 3 + 5 + 2  3 + 2  5 + 3  5 + 2  3  5 = 71
+#Zadanie 31. Prosze napisac funkcje, która jako parametr otrzymuje liczbe naturalna i zwraca sume iloczynów
+#elementów wszystkich niepustych podzbiorów zbioru podzielników pierwszych tej liczby. Mozna załozyc,
+#ze liczba podzielników pierwszych nie przekracza 20, zatem w pierwszym etapie funkcja powinna wpisac podzielniki
+#do tablicy pomocniczej. Przykład: 60 -> [2, 3, 5] -> 2 + 3 + 5 + 2  3 + 2  5 + 3  5 + 2  3  5 = 71
+
+def ex31(T,i=0,il=1):
+    global cnt
+    if i == len(T):
+        cnt += il
+        return False
+    return ex31(T,i+1,il*T[i])|ex31(T,i+1,il)
+    
+def start31(n):
+    global cnt
+    cnt = 0
+    ex31(PrimeDivList(n))
+    return cnt-1
+
+
+#//Zadanie 32. Dana jest tablica T[N] zawierajaca liczby naturalne. Prosze napisac funkcje, która odpowiada
+#na pytanie, czy sposród (niekoniecznie wszystkich) elementów tablicy mozna utworzyc dwa podzbiory o
+#jednakowej sumie elementów, tak aby suma mocy obu podzbiorów wynosiła k. Do funkcji nalezy przekazac
+#wyłacznie tablice T oraz liczbe naturalna k, funkcja powinna zwrócic wartosc typu bool.
+
+def ex32(T,k,i=0,s1=0,m1=0,s2=0,m2=0):
+    if m1+m2 == k and s1 == s2:
+        return True
+    if i == len(T):
+        return False
+    return ex32(T,k,i+1,s1+T[i],m1+1,s2,m2) or ex32(T,k,i+1,s1,m1,s2+T[i],m2+1) or ex32(T,k,i+1,s1,m1,s2,m2)
+
+
 if __name__ == "__main__":
-    T = [3,3,3,1]
-    print(ex23(T,2))
+    print(ex32([1,3,1,2,7,9],6))
