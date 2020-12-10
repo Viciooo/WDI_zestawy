@@ -428,7 +428,7 @@ def ex21(T,szukana,suma=0,i=0,banned=[]):
         return False
     if canMove21(banned,i,len(T)) == True:
         print(suma)
-        return ex21(T,szukana,suma+T[i//4][i%4],i+4-i%4,banned+[i]) or ex21(T,szukana,suma,i+1,banned)
+        return ex21(T,szukana,suma+T[i//8][i%8],i+8-i%8,banned+[i]) or ex21(T,szukana,suma,i+1,banned)
     else:
         return ex21(T,szukana,suma,i+1,banned)
     
