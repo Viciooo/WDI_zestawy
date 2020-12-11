@@ -431,6 +431,23 @@ def ex21(T,szukana,suma=0,i=0,banned=[]):
         return ex21(T,szukana,suma+T[i//4][i%4],i+4-i%4,banned+[i]) or ex21(T,szukana,suma,i+1,banned)
     else:
         return ex21(T,szukana,suma,i+1,banned)
+''' to u góry ładniejsze imo 
+def Check(tab,n):
+    for i in tab:
+        if i == n:
+            return False
+    return True
+
+def func(T,szukana,i=0,tw=[],tk=[]): 
+    if len(tw) > 0 and szukana == 0:
+        return True
+    if i == len(T)**2 or szukana < 0:
+        return False
+    if Check(tw,i%8) ==True and Check(tk,i//8) == True:
+        return func(T,szukana-T[i%8][i//8],i+4-i//4,tw+[i%8],tk+[i//8]) or func(T,szukana,i+1,tw,tk)
+    else:
+        return func(T,szukana,i+1,tw,tk)
+'''
     
 #Zadanie 22. Dana jest tablica T[N] zawierajaca liczby naturalne. Po tablicy mozemy przemieszczac sie
 #według nastepujacej zasady: z pola o indeksie i mozemy przeskoczyc na pole o indeksie i+k jezeli k jest
@@ -522,6 +539,38 @@ def ex23(T,k,i=0,tab=[]):
 #Zadanie 24. Tablica T = [(x1, y1), (x1, y1), ...] zawiera połozenia N punktów o współrzednych opisanych
 #wartosciami typu float. Prosze napisac funkcje, która zwróci najmniejsza odległosc miedzy srodkami ciezkosci
 #2 niepustych podzbiorów tego zbioru.
+
+def massMiddle(t):
+    x, y = 0, 0
+    for i in t:
+        x += i[0]
+        y += i[1]
+    x /= len(t)
+    y /= len(t)
+    return x,y
+
+def odl(t1,t2):
+    m1 = massMiddle(t1)
+    m2 = massMiddle(t2)
+    r = ((m1[0]-m2[0])**2 + (m1[1]-m2[1])**2)**(1/2)
+    return r
+
+def ex24(T,t1=[],t2=[],i=0):
+    global x
+    if len(t1) > 0 and len(t2) > 0:
+        tmp = odl(t1,t2)
+        if tmp < x:
+            x = tmp
+    if i == len(T):
+        return False
+    return ex24(T,t1+[T[i]],t2,i+1) | ex24(T,t1,t2+[T[i]],i+1) | ex24(T,t1,t2,i+1)
+
+def start24(T):
+    global x
+    x = 1000
+    ex24(T)
+    return x
+
 
 #//Zadanie 25. - to to samo co 22
 
@@ -636,31 +685,45 @@ def Group(T,r,i=0,tab=[]):
 #3, którego srodek ciezkosci lezy w odległosci mniejszej niz r od poczatku układu współrzednych. Do funkcji
 #nalezy przekazac dokładnie 3 parametry: tablice t, promien r, oraz ograniczenie k, funkcja powinna zwrócic
 #wartosc typu bool.
+def Check30(tab,r):
+    x, y= 0, 0
+    for i in tab:
+        x += i[0]
+        y += i[1]
+    x /= len(tab)
+    y /= len(tab)
+    odleg = (x**2 + y**2)**(1/2)
+    print(odleg)
+    if odleg <= r:
+        return True
+    return False
 
-
-
+def ex30(t,r,k,i=0,tab=[]):
+    if i == len(t):
+        return False
+    if len(tab) % 3 == 0 and len(tab) // 3 != 0 and len(tab) < k:
+        if Check30(tab,r):
+            return True
+    return ex30(t,r,k,i+1,tab+[t[i]]) or ex30(t,r,k,i+1,tab)
 
 #//Zadanie 31. Prosze napisac funkcje, która jako parametr otrzymuje liczbe naturalna i zwraca sume iloczynów
 #elementów wszystkich niepustych podzbiorów zbioru podzielników pierwszych tej liczby. Mozna załozyc,
 #ze liczba podzielników pierwszych nie przekracza 20, zatem w pierwszym etapie funkcja powinna wpisac podzielniki
-#do tablicy pomocniczej. Przykład: 60 -> [2, 3, 5] -> 2 + 3 + 5 + 2  3 + 2  5 + 3  5 + 2  3  5 = 71
-#Zadanie 31. Prosze napisac funkcje, która jako parametr otrzymuje liczbe naturalna i zwraca sume iloczynów
-#elementów wszystkich niepustych podzbiorów zbioru podzielników pierwszych tej liczby. Mozna załozyc,
-#ze liczba podzielników pierwszych nie przekracza 20, zatem w pierwszym etapie funkcja powinna wpisac podzielniki
-#do tablicy pomocniczej. Przykład: 60 -> [2, 3, 5] -> 2 + 3 + 5 + 2  3 + 2  5 + 3  5 + 2  3  5 = 71
-
-def ex31(T,i=0,il=1):
-    global cnt
-    if i == len(T):
-        cnt += il
-        return False
-    return ex31(T,i+1,il*T[i])|ex31(T,i+1,il)
-    
+#do tablicy pomocniczej. Przykład: 60 -> [2, 3, 5] -> 2 + 3 + 5 + 2  3 + 2  5 + 3  5 + 2  3  5 = 71   
 def start31(n):
-    global cnt
     cnt = 0
+
+    def ex31(T,i=0,il=1):
+        nonlocal cnt
+        if i == len(T):
+            cnt += il
+            return False
+        return ex31(T,i+1,il*T[i])|ex31(T,i+1,il)
+
     ex31(PrimeDivList(n))
     return cnt-1
+
+
 
 
 #//Zadanie 32. Dana jest tablica T[N] zawierajaca liczby naturalne. Prosze napisac funkcje, która odpowiada
@@ -675,9 +738,9 @@ def ex32(T,k,i=0,s1=0,m1=0,s2=0,m2=0):
         return False
     return ex32(T,k,i+1,s1+T[i],m1+1,s2,m2) or ex32(T,k,i+1,s1,m1,s2+T[i],m2+1) or ex32(T,k,i+1,s1,m1,s2,m2)
 
-
 if __name__ == "__main__":
-    print(ex32([1,3,1,2,7,9],6))
+    print(start31(60))
+    #print(math.ceil(math.log10(n))) badanie dł liczby
 
 
 
