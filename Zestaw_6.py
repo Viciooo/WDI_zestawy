@@ -712,19 +712,16 @@ def ex30(t,r,k,i=0,tab=[]):
 #do tablicy pomocniczej. Przykład: 60 -> [2, 3, 5] -> 2 + 3 + 5 + 2  3 + 2  5 + 3  5 + 2  3  5 = 71   
 def start31(n):
     cnt = 0
-
     def ex31(T,i=0,il=1):
-        nonlocal cnt
+        nonlocal cnt #<3
         if i == len(T):
             cnt += il
             return False
         return ex31(T,i+1,il*T[i])|ex31(T,i+1,il)
-
     ex31(PrimeDivList(n))
     return cnt-1
 
-
-
+#zajebisty sposób serio trust me
 
 #//Zadanie 32. Dana jest tablica T[N] zawierajaca liczby naturalne. Prosze napisac funkcje, która odpowiada
 #na pytanie, czy sposród (niekoniecznie wszystkich) elementów tablicy mozna utworzyc dwa podzbiory o
