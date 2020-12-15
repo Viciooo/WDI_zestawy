@@ -1,5 +1,6 @@
 def split(word): 
     return [char for char in word]
+    
 
 def string_compare(string1,string2):
     
