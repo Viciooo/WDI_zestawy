@@ -22,7 +22,6 @@ def start(n):
     import math
     l = math.floor(math.log10(n)+1)
     res = []
-    tmp = l
     def rek(n,l):
         nonlocal res
         if l == 1:

@@ -571,6 +571,40 @@ def start24(T):
     ex24(T)
     return x
 
+#wersja 2 ale można wrzucić do dwóch worków jeden element
+'''def massMiddle(t):
+    x, y = 0, 0
+    for i in t:
+        x += i[0]
+        y += i[1]
+    x /= len(t)
+    y /= len(t)
+    return x,y
+
+def odl(t1,t2):
+    m1 = massMiddle(t1)
+    m2 = massMiddle(t2)
+    r = ((m1[0]-m2[0])**2 + (m1[1]-m2[1])**2)**(1/2)
+    return r
+
+def ex24(T,t1=[],t2=[],i=0):
+    global x
+    if len(t1) > 0 and len(t2) > 0 and t1 != t2:
+        tmp = odl(t1,t2)
+        if tmp < x:
+            x = tmp
+    if i == len(T):
+        return False
+    ex24(T,t1+[T[i]],t2,i+1) or ex24(T,t1,t2+[T[i]],i+1) or ex24(T,t1,t2,i+1) or ex24(T,t1+[T[i]],t2+[T[i]],i+1)
+
+def start24(T):
+    global x
+    x = 1000
+    ex24(T)
+    return x
+
+tab = [(0,0),(1,2),(2,1),(100000000,1000000000)]
+print(start24(tab))'''
 
 #//Zadanie 25. - to to samo co 22
 
@@ -736,8 +770,8 @@ def ex32(T,k,i=0,s1=0,m1=0,s2=0,m2=0):
     return ex32(T,k,i+1,s1+T[i],m1+1,s2,m2) or ex32(T,k,i+1,s1,m1,s2+T[i],m2+1) or ex32(T,k,i+1,s1,m1,s2,m2)
 
 if __name__ == "__main__":
-    print(start31(60))
+    #print(start31(60))
     #print(math.ceil(math.log10(n))) badanie dł liczby
-
+    print(ex32([4,0,24,2,2],4))
 
 

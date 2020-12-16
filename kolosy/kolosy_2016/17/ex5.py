@@ -40,8 +40,3 @@ def ex1(T):
             if k > 0:
                 return k+2
     return False
-
-T = [[3,5,3,0],[1,7,7,1],[3,1,11,3],[2,1,2,3]]
-for i in T:
-    print(i)
-print(ex1(T))

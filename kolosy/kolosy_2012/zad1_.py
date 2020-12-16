@@ -28,8 +28,7 @@ def start(T,N):
                 for i in range(N):
                     tmp += res[i]
                 if tmp > mSuma:
-                    mSuma = tmp
-                    memory = res
+                    mSuma, memory = tmp, res
             return False
         if i == N*N:
             return False
