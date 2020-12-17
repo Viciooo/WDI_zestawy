@@ -22,7 +22,7 @@ def start(t):
         rec(t,n,i)
     return min(steps) if steps!=[] else "Row full of figures"
 
-t = [[False,True,True,True],[True,True,False,True],[False,True,True,True],[True,True,True,True]]
+t = [[False,True,True,True],[True,True,False,True],[False,True,True,True],[True,True,False,True]]
 for i in t:
     print(i)
 

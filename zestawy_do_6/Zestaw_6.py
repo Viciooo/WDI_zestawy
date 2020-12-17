@@ -644,15 +644,14 @@ def start26(A,B):
 
 def Check(tab):
     for el in range(len(tab)):
-        suma = abs((el[0]-el[1])*(el[2]-el[3]))
-        for i in range(el,len(tab)):
-            suma += abs((i[0]-i[1])*(i[2]-i[3]))
-            if el[0] > i[0] and el[1] < i[1] and el[2] > i[2] and el[3] < i[3]:
+        suma = abs((tab[el][0]-tab[el][1])*(tab[el][2]-tab[el][3]))
+        for i in range(el+1,len(tab)):
+            suma += abs((tab[i][0]-tab[i][1])*(tab[i][2]-tab[i][3]))
+            if tab[el][0] > tab[i][0] and tab[el][1] < tab[i][1] and tab[el][2] > tab[i][2] and tab[el][3] < tab[i][3]:
                 continue
-            if el[0] < i[0] and el[1] > i[1] and el[2] < i[2] and el[3] > i[3]:
+            if tab[el][0] < tab[i][0] and tab[el][1] > tab[i][1] and tab[el][2] < tab[i][2] and tab[el][3] > tab[i][3]:
                 continue
-            return False
-        if suma - abs((el[0]-el[1])*(el[2]-el[3])) == 2012:
+        if suma == 1012:
             return True
     return False
 
@@ -772,6 +771,5 @@ def ex32(T,k,i=0,s1=0,m1=0,s2=0,m2=0):
 if __name__ == "__main__":
     #print(start31(60))
     #print(math.ceil(math.log10(n))) badanie dł liczby
-    print(ex32([4,0,24,2,2],4))
 
 

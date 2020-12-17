@@ -7,6 +7,8 @@ są względnie pierwsze. Do funkcji należy przekazać wartość N, funkcja powi
 znalezionych par'''
 
 def nwd(n1,n2):
+    if n1 == 0 or n2 == 0:
+        return False 
     i = 2
     if n2 > n1:
         n1, n2 = n2, n1
@@ -15,18 +17,19 @@ def nwd(n1,n2):
             return False
         i +=1
     return True
+
 def start(N):
     cnt = 0
     def func(N,A=0,i=0,B=0,j=0):
         nonlocal cnt
         if N == 0:
-            if A != 0 and B != 0 and nwd(A,B):
+            if nwd(A,B):
                 print(A,B)
                 cnt += 1
             return
         return func(N//10,A+(N%10)*10**i,i+1,B,j) or func(N//10,A,i,B+(N%10)*10**j,j+1)
     func(N)
-    return cnt//2
+    return cnt
 print(start(237))
 
-#czas: zbyt długo bo jebałem się w 'optymalne rozwiązania'
+#15 223

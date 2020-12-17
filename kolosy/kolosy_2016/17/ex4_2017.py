@@ -27,7 +27,8 @@ def rek(T, flag, p=1):
 T = [0 for _ in range(9)]
 T[0] = 1
 flag = [False for _ in range(9)]
-flag[0] = True
 rek(T,flag)
+
+
 
 #made by @Michał Wójcik ~ wzorcówka proszę Pana
