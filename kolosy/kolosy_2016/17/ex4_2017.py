@@ -29,6 +29,5 @@ T[0] = 1
 flag = [False for _ in range(9)]
 rek(T,flag)
 
-
-
 #made by @Michał Wójcik ~ wzorcówka proszę Pana
+

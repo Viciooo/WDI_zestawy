@@ -74,3 +74,4 @@ for i in t1:
     print(i)
 
 print(func(t1,0,1,2,1))
+
