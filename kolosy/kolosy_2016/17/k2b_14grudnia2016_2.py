@@ -5,10 +5,15 @@ int w[N]. Proszę napisać funkcję która wybiera do usunięcia z szachownicy d
 suma liczb na polach szachowanych przez pozostałe wieże była najmniejsza. Do funkcji należy
 przekazać tablice t i w, funkcja powinna zwrócić numery kolumn z których usunięto wieże.'''
 
-def suma(r1,r2,c1,c2,T,N):
+#! xd zadanko nie chce takiego na kolosie 
+#!brak możliwych ruchów - trzeba dodać range bo nie wiadomo czy mogę ruszyć wieżą przez blokowanie prZez inne wieże 
+def suma(r1,r2,c1,c2,T,N,w):
     s = 0
     for i in range(N):
-        s += T[i][c1] + T[i][c2] + T[r1][i] + T[r2][i] 
+        if i in w:
+            s-=T[i][c1]
+            s-=T[i][c2]
+    s += T[i][c1] + T[i][c2]
     s -= 2*T[r1][c1] +2*T[r2][c2]
     if r1 != r2:
         s -= T[r2][c1] + T[r1][c2]
