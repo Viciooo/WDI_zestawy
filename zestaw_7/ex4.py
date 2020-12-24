@@ -5,7 +5,18 @@ class Node():
         self.val = val
         self.next = None
 
-#?kurcze
+def add_front(first,n):
+    q = Node(n)
+    q.next = first 
+    return q
+
+def reverse(first):
+    p = first
+    z = None
+    while p!= None:
+        z = add_front(z,p.val)
+        p = p.next
+    return z
 
 def insert(space,n):
     p = space #space - nasz zbiór
