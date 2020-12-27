@@ -44,17 +44,16 @@ def popByVal(f,n):
     return f
 
 
-z = Node(11)
-for i in range(10):
-    a = Node(i, z, None)
-    z.prev = a
-    z = a
+# z = Node(11)
+# for i in range(10):
+#     a = Node(i, z, None)
+#     z.prev = a
+#     z = a
 
-def write(first):
-    while first != None:
-        print("[",first.val,"] -----> ",end='',sep='')
-        first = first.next
-    print(None)
+# def write(first):
+#     while first != None:
+#         print("[",first.val,"] -----> ",end='',sep='')
+#         first = first.next
+#     print(None)
 
-z = popByVal(z,5)
-write(func(z))
+# write(func(z))

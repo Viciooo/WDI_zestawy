@@ -11,7 +11,7 @@ class Node():
 
 def popByVal(f,n):
     p = f
-    while p != None and p.val <= n:
+    while p != None and p.val <= n: # różni się od poprzedniego tą linijką
         if p.val == n:
             if p.prev == None:
                 f = f.next

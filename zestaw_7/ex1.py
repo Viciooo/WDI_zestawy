@@ -48,7 +48,7 @@ def insert(space,n):
     q.next = p
     return space
 
-def delete(space, n): #dlaczego nie działa usunięcie z pierwszego miejsca ? i co robić jak chcemy usunąć jedyny element w liście?
+def delete(space, n): 
     if space is None:
         return space
     prev = None

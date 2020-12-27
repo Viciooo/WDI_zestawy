@@ -28,7 +28,6 @@ def func(first):
         if Count5_inSys8(p.val):
             first = add_front(first,p.val)
             prev.next, p = p.next, p.next
-            write(first)
         else:
             p, prev = p.next, p
     return first
@@ -73,10 +72,3 @@ write(z2)
 print("**********")
 write(func(z2))
 
-# poprawić bo jest błąd
-
-# [1] -----> [2] -----> [5] -----> [7] -----> None
-# **********
-# [2] -----> [1] -----> [5] -----> [7] -----> None
-# [7] -----> [1] -----> [5] -----> None
-# [7] -----> [1] -----> [5] -----> None
