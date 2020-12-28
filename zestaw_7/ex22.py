@@ -13,32 +13,32 @@ def is_cycle(first):
         p = p.next
     return False
 
-def pushBack(first,n):
-    p, previous = first, None
-    while p != None:
-        p, previous = p.next, p
-    previous.next = Node(n)
-    return first
+# def pushBack(first,n):
+#     p, previous = first, None
+#     while p != None:
+#         p, previous = p.next, p
+#     previous.next = Node(n)
+#     return first
 
-def pushBackAddCycle(first,n):
-    p, previous = first, None
-    while p != None:
-        p, previous = p.next, p
-    q = Node(n)
-    previous.next = q
-    q.next = first
-    return first
+# def pushBackAddCycle(first,n):
+#     p, previous = first, None
+#     while p != None:
+#         p, previous = p.next, p
+#     q = Node(n)
+#     previous.next = q
+#     q.next = first
+#     return first
 
-def write(first):
-    while first != None:
-        print("[",first.val,"] -----> ",end='',sep='')
-        first = first.next
-    print(None)
+# def write(first):
+#     while first != None:
+#         print("[",first.val,"] -----> ",end='',sep='')
+#         first = first.next
+#     print(None)
 
-z = Node(1)
-z = pushBack(z,3)
-z = pushBack(z,5)
-z = pushBack(z,7)
-#z = pushBackAddCycle(z,2)
+# z = Node(1)
+# z = pushBack(z,3)
+# z = pushBack(z,5)
+# z = pushBack(z,7)
+# #z = pushBackAddCycle(z,2)
 
-print(is_cycle(z))
+# print(is_cycle(z))
