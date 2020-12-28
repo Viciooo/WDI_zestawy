@@ -1,7 +1,7 @@
-'''Zadanie 1. Zaimplementuj zbiór mnogościowy liczb naturalnych korzystając ze struktury listy odsyłaczowej.
-- czy element należy do zbioru
-- wstawienie elementu do zbioru
-- usunięcie elementu ze zbioru'''
+# Zadanie 1. Zaimplementuj zbiór mnogościowy liczb naturalnych korzystając ze struktury listy odsyłaczowej.
+# - czy element należy do zbioru
+# - wstawienie elementu do zbioru
+# - usunięcie elementu ze zbioru
 
 class Node:
     def __init__(self,value=None):

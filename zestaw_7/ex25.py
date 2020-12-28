@@ -1,17 +1,19 @@
-# Zadanie 22. Dana jest lista, który być może zakończona jest cyklem. Napisać funkcję, która sprawdza ten fakt.
+# Zadanie 25. Dana jest lista, który zakończona jest cyklem.
+# Napisać funkcję, która zwraca wskaźnik do ostatniego elementu przed cyklem.
 
 class Node:
     def __init__(self,val=None,next=None):
         self.next = next
         self.val = val
 
-def is_cycle(first):
-    p = first
+def lastEl(first):
+    p, prev = first, None
     while p != None:
         if p.next == first:
-            return True
-        p = p.next
-    return False
+            return p
+        p, prev = p.next, p
+    print("nie jest cyklem, ale ostatni el to: ",end ='')
+    return prev #jeśli nie jest to cykl to zwróci ostatni element 
 
 def pushBack(first,n):
     p, previous = first, None
@@ -41,4 +43,4 @@ z = pushBack(z,5)
 z = pushBack(z,7)
 #z = pushBackAddCycle(z,2)
 
-print(is_cycle(z))
+print((lastEl(z)).val)
