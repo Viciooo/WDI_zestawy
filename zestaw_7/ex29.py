@@ -25,6 +25,8 @@ def isIn(first,n):
         return True
 
 def listDiff(f1,f2):
+# tworzenie listy new jest zbędne ale proszono o usuwanie elemementów tak jakby lista miała być zwracana
+#więc zamiast usuwać z tamtych list tworzę nową z el wspólnych - wydaje mi się to prostsze i szybsze
     new = Node("!")
     sumaDlList = getLen(f1) + getLen(f2)
     p = new
@@ -35,30 +37,30 @@ def listDiff(f1,f2):
             newLen += 1
             p = p.next
         f1 = f1.next
-    write(new.next)
+    #write(new.next) 
     return sumaDlList - 2*newLen
 
-def write(first):
-    while first != None:
-        print("[",first.val,"] -----> ",end='',sep='')
-        first = first.next
-    print(None)
+# def write(first):
+#     while first != None:
+#         print("[",first.val,"] -----> ",end='',sep='')
+#         first = first.next
+#     print(None)
 
-def pushBack(first,n):
-    p, previous = first, None
-    while p != None:
-        p, previous = p.next, p
-    previous.next = Node(n)
-    return first
+# def pushBack(first,n):
+#     p, previous = first, None
+#     while p != None:
+#         p, previous = p.next, p
+#     previous.next = Node(n)
+#     return first
 
-z = Node(1)
-z = pushBack(z,2)
-z = pushBack(z,4)
-z = pushBack(z,8)
+# z = Node(1)
+# z = pushBack(z,2)
+# z = pushBack(z,4)
+# z = pushBack(z,8)
 
-x = Node(1)
-#x = pushBack(x,4)
-x = pushBack(x,3)
-#x = pushBack(x,7)
+# x = Node(1)
+# #x = pushBack(x,4)
+# x = pushBack(x,3)
+# #x = pushBack(x,7)
 
-print(listDiff(z,x))
+# print(listDiff(z,x))

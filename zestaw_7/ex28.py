@@ -28,52 +28,37 @@ def deleteCommon(first_sorted,first_unsorted):
     while p2 != None:
         a = is_in(first_sorted,p2.val)
         if a != False:
-            print("aaa")
-            write(a)
             cnt += 2
             first_sorted = a
             if prev2 == None:
                 first_unsorted, p2 = first_unsorted.next, p2.next
             else:
                 prev2.next = p2.next
-            print("bbb")
-            write(first_unsorted)
         else:
             p2, prev2 = p2.next, p2
-    #pomocniczy write
-    write(first_sorted)
-    print("************")
-    write(first_unsorted)
     return cnt
 
-def write(first):
-    while first != None:
-        print("[",first.val,"] -----> ",end='',sep='')
-        first = first.next
-    print(None)
+# def write(first):
+#     while first != None:
+#         print("[",first.val,"] -----> ",end='',sep='')
+#         first = first.next
+#     print(None)
 
-def pushBack(first,n):
-    p, previous = first, None
-    while p != None:
-        p, previous = p.next, p
-    previous.next = Node(n)
-    return first
+# def pushBack(first,n):
+#     p, previous = first, None
+#     while p != None:
+#         p, previous = p.next, p
+#     previous.next = Node(n)
+#     return first
 
-z = Node(1)
-z = pushBack(z,2)
-z = pushBack(z,4)
-z = pushBack(z,8)
+# z = Node(1)
+# z = pushBack(z,2)
+# z = pushBack(z,4)
+# z = pushBack(z,8)
 
-x = Node(1)
-x = pushBack(x,4)
-x = pushBack(x,3)
-x = pushBack(x,7)
+# x = Node(1)
+# x = pushBack(x,4)
+# x = pushBack(x,3)
+# x = pushBack(x,7)
 
-print(deleteCommon(z,x))
-
-# [7] -----> None
-# ************
-# [4] -----> [3] -----> None
-# 6
-
-#błąd - nie usuwa 4 ale wynik daje dobry
+# print(deleteCommon(z,x))
