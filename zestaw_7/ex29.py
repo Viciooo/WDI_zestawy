@@ -8,37 +8,32 @@ class Node:
         self.next = next
         self.val = val
 
-def getLen(first):
-    cnt = 0
-    while first != None:
-        cnt += 1
-        first = first.next
-    return cnt
-
-def isIn(first,n):
-    p = first
-    while p != None and p.val < n:
-        p = p.next
-    if p == None or p.val > n:
-        return False
-    else:
-        return True
-
 def listDiff(f1,f2):
-# tworzenie listy new jest zbędne ale proszono o usuwanie elemementów tak jakby lista miała być zwracana
-#więc zamiast usuwać z tamtych list tworzę nową z el wspólnych - wydaje mi się to prostsze i szybsze
+    #robię nową listę i dodaje tam wspolne elementy
+    #do cnt zliczam ilość "przewinięć elementu mniejszego + to co ewentualnie zostanie w dłuższej z list"
     new = Node("!")
-    sumaDlList = getLen(f1) + getLen(f2)
-    p = new
-    newLen = 0
-    while f1 != None:
-        if isIn(f2,f1.val):
-            p.next = Node(f1.val)
-            newLen += 1
+    p= new
+    cnt = 0
+    while f1 != None and f2 != None:
+        if f1.val == f2.val:
+            p.next = f1
             p = p.next
+            f1, f2 = f1.next, f2.next
+        else:
+            cnt += 1
+            if f1.val < f2.val:
+                f1 = f1.next
+            else:
+                f2 = f2.next
+        p.next = None
+    while f1 != None:
+        cnt += 1
         f1 = f1.next
-    #write(new.next) 
-    return sumaDlList - 2*newLen
+    while f2 != None:
+        cnt += 1
+        f2 = f2.next
+    print(cnt)
+    return new.next
 
 # def write(first):
 #     while first != None:
@@ -53,14 +48,14 @@ def listDiff(f1,f2):
 #     previous.next = Node(n)
 #     return first
 
-# z = Node(1)
+# z = Node(3)
 # z = pushBack(z,2)
 # z = pushBack(z,4)
 # z = pushBack(z,8)
 
-# x = Node(1)
-# #x = pushBack(x,4)
-# x = pushBack(x,3)
-# #x = pushBack(x,7)
+# x = Node(11)
+# x = pushBack(x,8)
+# x = pushBack(x,5)
+# x = pushBack(x,7)
 
-# print(listDiff(z,x))
+# write(listDiff(z,x))
