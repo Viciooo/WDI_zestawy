@@ -3,71 +3,56 @@
 
 class Node:
     def __init__(self,val=None,prev=None, next=None):
-        self.next = next
         self.prev = prev
         self.val = val
 
-# def add(f1,f2):
-#     p = f1
-#     while f2 != None:
-#         s = p.val + f2.val
-#         if s > 9: # jeśli coś przechodzi dalej
-#             if p.prev != None:
-#                 p.prev.val += s//10
-#             else: #jeśli nie ma dalej cyfry
-#                 p.prev = Node(s//10)
-#         p.val = s%10
-#         p, f2 = p.prev, f2.prev
-#     return f1
+class Node:
+    def __init__(self,val=0,next=None):
+        self.val = val
+        self.next = next
 
-def add(l1,l2):
+def Add(f1,f2):
     new = Node("!")
     p = new
-    buffer = 0
-    while l2 != None and l1 != None:
-        s = l1.val + l2.val + buffer
-        buffer = s//10
-        pointer = Node(s%10)
-        p.prev = pointer
-        p = p.prev
-        l1, l2 = l1.prev, l2.prev
-    if l2 != None:
-        l2.val += buffer
-        p.prev = l2
-    elif l1 != None:
-        l1.val += buffer
-        p.prev = l1
-    return new.prev
+    buffor = 0
 
-def pushFront(last,n):
-    p,tmp = last, None
-    while p != None:
-        p, tmp = p.prev, p
-    tmp.prev = Node(n)
-    return last
+    while f1 != None and f2 != None:
+        suma = f1.val + f2.val + buffor
+        buffor = suma // 10
+        q = Node(suma%10)
+        p.next = q
+        p, f1, f2 = p.next, f1.next, f2.next
 
-def toPrint(last):
-    cnt = suma = 0
-    while last != None:
-        suma += (last.val)*10**cnt
-        cnt += 1
-        last = last.prev
-    return suma
-
-z = Node(1)
-z = pushFront(z,2)
-# z = pushFront(z,9)
-#z = pushFront(z,4)
-#z = pushFront(z,5)
-
-x = Node(9)
-# x = pushFront(x,9)
-#x = pushFront(x,3)
-# z = pushFront(z,4)
-# z = pushFront(z,5)
+    while f1 != None:
+        suma = f1.val + buffor
+        buffor = suma // 10
+        q = Node(suma%10)
+        p.next = q
+        p, f1= p.next, f1.next
+        
+    while f2 != None:
+        suma = f2.val + buffor
+        buffor = suma // 10
+        q = Node(suma%10)
+        p.next = q
+        p, f2= p.next, f2.next
     
-print(toPrint(x),"+",toPrint(z),"=",toPrint(add(z,x)))
+    if buffor > 0:
+        q = Node(buffor)
+        p.next = q
 
+    return new.next
 
+def write(first):
+    while first != None:
+        print("[",first.val,"] -----> ",end='',sep='')
+        first = first.next
+    print(None)
 
+f1 = Node(8)
+f1.next = Node(9)
+f1.next.next = Node(9)
+f2 = Node(2)
+wynik = Add(f1,f2)
+write(wynik)
 
