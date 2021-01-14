@@ -3,73 +3,47 @@
 # elementy obu list, funkcja powinna zwrócić wskazanie do scalonej listy.
 # - funkcja iteracyjna,
 # - funkcja rekurencyjna.
-
-class Node():
-    def __init__(self,val=None):
-        self.val = val
+end = None
+class Node:
+    def __init__(self, value=None):
+        self.val = value
         self.next = None
-
-def iter_merge(f1,f2):
-    z = Node("!") # wartownik ale chill usunie się
-    p = z
+def scal(f1,f2):
+    f = Node()
+    l = f
     while f1 != None and f2 != None:
         if f1.val < f2.val:
-            p.next = Node(f1.val)
-            p = p.next
+            l.next = f1
+            l = f1
             f1 = f1.next
-        elif f1.val == f2.val:
-            p.next = Node(f2.val)
-            f1, f2, p = f1.next, f2.next, p.next
         else:
-            p.next = Node(f2.val)
-            p, f2 = p.next, f2.next
-
-    while f1 != None:
-        p.next = Node(f1.val)
-        p = p.next
-        f1 = f1.next
-
-    while f2 != None:
-        p.next = Node(f2.val)
-        p = p.next
-        f2 = f2.next
-
-    if f1 == f2 == None:
-        return z.next
-
-null = None
-def reku(first,second,new_last):
-    if first==null:
-        if second!=null:
-            buffer = second.next
-            second.next = null
-            new_last.next = second
-            return reku(first,buffer,second)
-        else:
-            return
-    if second==null:
-        if first!=null:
-            buffer = first.next
-            first.next = null
-            new_last.next = first
-            return reku(buffer,second,first)
-        else:
-            return 
-    if first.val>second.val:
-        buffer = second.next
-        second.next = null
-        new_last.next = second
-        return reku(first,buffer,second)
+            l.next = f2
+            l = f2
+            f2 = f2.next
+        end
+    end
+    if f1 != None:
+        l.next = f1
     else:
-        new_last.next = first
-        buffer = first.next
-        first.next = null
-        return reku(buffer,second,first)
-def rec_merge(first,second):
-    new_ = Node()
-    reku(first,second,new_)
-    return new_.next
-#podpierdoloned od ŁP
+        l.next = f2
+    end
+    return f.next
+end
+
+def merge_rek(l1, l2):
+    if l1 == None:
+        return l2
+    if l2 == None:
+        return l1
+    
+    if l1.val < l2.val:
+        res = l1
+        res.next = merge_rek(l1.next, l2)
+    else:
+        res = l2
+        res.next = merge_rek(l1, l2.next)
+    
+    return res
 
 def write(first):
     while first != None:
@@ -109,6 +83,6 @@ write(z1)
 print("**********")
 write(z2)
 print("**********")
-z3 = iter_merge(z1,z2)
+z3 = merge_rek(z1,z2)
 write(z3)
 

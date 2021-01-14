@@ -7,11 +7,17 @@ class Node:
         self.val = val
 
 def lastEl(first):
-    p, prev = first, None
-    while p != None:
-        if p.next == first:
-            return p
+    p = q = first
+    while True:
+        p = p.next
+        q = q.next.next
+        if p == q:
+            break
+    p, prev = p.next, p
+    while p != q:
         p, prev = p.next, p
-    print("nie jest cyklem, ale ostatni el to: ",end ='')
-    return prev #jeśli nie jest to cykl to zwróci ostatni element 
+    return prev
+
+
+
 

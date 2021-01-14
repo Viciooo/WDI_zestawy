@@ -36,7 +36,7 @@ def sortByLastDigit(first):
 
 
 # z = Node(123)
-# for i in range(20):
+# for i in range(10):
 #     z = pushBack(z,i)
 # write(z)
 # write(sortByLastDigit(z))

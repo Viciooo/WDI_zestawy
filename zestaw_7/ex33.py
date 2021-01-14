@@ -47,24 +47,24 @@ def insert(p,s):
     print("False")
     return p
 
-def writeCycle(first):
-    p, prev = first.next, first
-    while p != first:
-        print("[",prev.val,"] -----> ",end='',sep='')
-        p, prev = p.next, p
+# def writeCycle(first):
+#     p, prev = first.next, first
+#     while p != first:
+#         print("[",prev.val,"] -----> ",end='',sep='')
+#         p, prev = p.next, p
 
-    print("[",prev.val,"] -----> ")
+#     print("[",prev.val,"] -----> ")
 
-z = None
-z = insert(z,"zosia")
-z = insert(z,"bartek")
-z = insert(z,"leszek")
-z = insert(z,"marek")
-z = insert(z,"ola")
-z = insert(z,"zala_makota_d")
-z = insert(z,"aa")
-writeCycle(z)
-print(ord("k"),ord("m"))
+# z = None
+# z = insert(z,"zosia")
+# z = insert(z,"bartek")
+# z = insert(z,"leszek")
+# z = insert(z,"marek")
+# z = insert(z,"ola")
+# z = insert(z,"zala_makota_d")
+# z = insert(z,"aa")
+# writeCycle(z)
+# print(ord("k"),ord("m"))
 
 
 
