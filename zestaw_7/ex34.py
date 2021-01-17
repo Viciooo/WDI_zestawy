@@ -65,27 +65,27 @@ def insert(p,s):
     prev.next, q.next = q, curr
     return q
 
-# def writeCycle(first):
-#     if first == None:
-#         print(None)
-#         return
-#     p, prev = first.next, first
-#     while p != first:
-#         print("[",prev.val,"] -----> ",end='',sep='')
-#         p, prev = p.next, p
+def writeCycle(first):
+    if first == None:
+        print(None)
+        return
+    p, prev = first.next, first
+    while p != first:
+        print("[",prev.val,"] -----> ",end='',sep='')
+        p, prev = p.next, p
 
-#     print("[",prev.val,"] -----> ",sep='')
+    print("[",prev.val,"] -----> ",sep='')
 
-# z = None
-# z = insert(z,1)
-# z = insert(z,2)
-# z = insert(z,2)
-# z = insert(z,1)
+z = None
+z = insert(z,1)
+z = insert(z,2)
+z = insert(z,2)
+z = insert(z,1)
 # z = insert(z,7)
-# z = insert(z,2)
+z = insert(z,2)
+z = insert(z,1)
+# z = insert(z,5)
 # z = insert(z,1)
-# # z = insert(z,5)
-# # z = insert(z,1)
 
-# writeCycle(z)
-# writeCycle(deleteSelected(z,3))
+writeCycle(z)
+writeCycle(deleteSelected(z,3))

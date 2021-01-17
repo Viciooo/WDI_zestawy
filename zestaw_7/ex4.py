@@ -6,37 +6,17 @@ class Node():
         self.val = val
         self.next = None
 
-def reverse(ptr):
-    firsts = [None for _ in range(10)]
-    lasts = [None for _ in range(10)]
-
-    while ptr != None:
-        last_dig = ptr.val % 10
-        if firsts[last_dig] == None:
-            firsts[last_dig] = lasts[last_dig] = ptr
-        else:
-            lasts[last_dig].next = ptr
-            lasts[last_dig] = ptr
-        ptr = ptr.next
-    
-    first = None
-    for i in range(10):
-        if firsts[i] != None:
-            if first == None:
-                first = firsts[i]
-                last = lasts[i]
-            else:
-                last.next = firsts[i]
-                last = lasts[i]
-    last.next = None
+def reverse (first) :
+    if first == None or first.next == None :
+        return first
+    p = first.next
+    prev = first
+    first.next = None
+    while p != None :
+        prev,p = p,p.next
+        prev.next = first
+        first = prev
     return first
-
-    # first = None
-    # for i in range(9,-1,-1):
-    #     if firsts[i] != None:
-    #         lasts[i].next = first
-    #         first = firsts[i]
-    # return first
 
 
 def insert(space,n):

@@ -14,6 +14,11 @@ def pushBack(first,A,B):
         prev.next = q
     return first
 
+def rec(first,used,new,prevB="!"):
+    if cnt == 
+
+
+
 def write(first):
     while first != None:
         print("[",first.a,"|",first.b,"] -----> ",end='',sep='')
@@ -25,5 +30,6 @@ m = pushBack(m,3,6)
 m = pushBack(m,8,2)
 m = pushBack(m,2,3)
 m = pushBack(m,6,2)
-
+u = [False for i in range(5)]
+new = klocek("!","!")
 write(m)

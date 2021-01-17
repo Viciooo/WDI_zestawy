@@ -53,20 +53,20 @@ def divideList(dataL,evenPlus,oddMinus):
     write(evenPlus)
     return cnt
 
-def write(first):
-    while first != None:
-        print("[",first.val,"] -----> ",end='',sep='')
-        first = first.next
-    print(None)
+# def write(first):
+#     while first != None:
+#         print("[",first.val,"] -----> ",end='',sep='')
+#         first = first.next
+#     print(None)
 
-z = Node(1)
-z = pushBack(z,-3)
-z = pushBack(z,-4)
-z = pushBack(z,2)
-z = pushBack(z,0)
-z = pushBack(z,-1)
-z = pushBack(z,8)
+# z = Node(1)
+# z = pushBack(z,-3)
+# z = pushBack(z,-4)
+# z = pushBack(z,2)
+# z = pushBack(z,0)
+# z = pushBack(z,-1)
+# z = pushBack(z,8)
 
-x = Node(6)
-y = Node(-5)
-print(divideList(z,x,y))
+# x = Node(6)
+# y = Node(-5)
+# print(divideList(z,x,y))

@@ -24,6 +24,7 @@ def func(pointer):
                 r = prev.r
             return None
         elif prev.l < l and prev.r >= l:
+            cnt += 1
             l = prev.l
             return None
     while p != None:
@@ -95,6 +96,7 @@ z = pushBack(z,8,12)
 z = pushBack(z,5,6)
 z = pushBack(z,13,17)
 z = pushBack(z,12,13)
+z = pushBack(z,12,12)
 
 def write(first):
     while first != None:

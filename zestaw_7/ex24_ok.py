@@ -20,27 +20,25 @@ def dlugosc_przed_cykl(first):
         cnt += 1
     return cnt
 
-def pushBack(first,n):
-    p, prev = first, None
-    while p != None:
-        p, prev = p.next, p
-    prev.next = Node(n)
-    return first
+# def pushBack(first,n):
+#     p, prev = first, None
+#     while p != None:
+#         p, prev = p.next, p
+#     prev.next = Node(n)
+#     return first
 
-def pushBackAddCycle(first,n):
-    p, previous = first, None
-    cnt = 0
-    while p != None and cnt != 2:
-        p, previous = p.next, p
-        cnt += 1
-    q = Node(n)
-    previous.next = q
-    q.next = first
-    return first
+# def pushBackAddCycle(first,n):
+#     p, previous = first, None
+#     while p != None:
+#         p, previous = p.next, p
+#     q = Node(n)
+#     previous.next = q
+#     q.next = first
+#     return first
 
-z = Node(1)
-z = pushBack(z,3)
-z = pushBack(z,3)
-z = pushBackAddCycle(z,5)
-print(dlugosc_przed_cykl(z))
+# z = Node(1)
+# z = pushBack(z,3)
+# z = pushBack(z,3)
+# z = pushBackAddCycle(z,5)
+# print(dlugosc_przed_cykl(z))
 

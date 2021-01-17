@@ -2,11 +2,6 @@
 # Proszę napisać funkcję dodającą dwie takie liczby. W wyniku dodawania dwóch liczb powinna powstać nowa lista.
 
 class Node:
-    def __init__(self,val=None,prev=None, next=None):
-        self.prev = prev
-        self.val = val
-
-class Node:
     def __init__(self,val=0,next=None):
         self.val = val
         self.next = next
